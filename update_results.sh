@@ -2,6 +2,10 @@
 
 set -euo pipefail
 
+resultfile=$(realpath results.txt)
+printf 'Results file: %s\n\n' "$resultfile"
+
 pushd gosrc
-go test -bench=. | tee README.txt
+printf 'GOSRC BENCHMARK RESULTS\n\n' > "$resultfile"
+go test -bench=. | tee -a "$resultfile"
 popd

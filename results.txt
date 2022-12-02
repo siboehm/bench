@@ -1,0 +1,14 @@
+GOSRC BENCHMARK RESULTS
+
+goos: linux
+goarch: amd64
+pkg: benchmarks/gosrc
+cpu: AMD EPYC 7513 32-Core Processor                
+BenchmarkFunctionCallNoInline-128          	697375345	         1.646 ns/op
+BenchmarkFunctionCallInline-128            	1000000000	         0.5548 ns/op
+BenchmarkStructAccessSequential-128        	       1	1191421980 ns/op
+BenchmarkStructAccessNonSequential-128     	       1	2200328449 ns/op
+BenchmarkNoTypeAssert-128                  	693675432	         1.652 ns/op
+BenchmarkTypeAssert-128                    	714544965	         1.649 ns/op
+PASS
+ok  	benchmarks/gosrc	8.044s

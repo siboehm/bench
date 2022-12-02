@@ -4,6 +4,9 @@
 # profiler output
 *.prof
 
+# go test binary
+gosrc/gosrc.test
+
 # Prerequisites
 *.d
 
