@@ -6,6 +6,7 @@
 
 # go test binary
 gosrc/gosrc.test
+gosrc/gosrc.asm
 
 # Prerequisites
 *.d

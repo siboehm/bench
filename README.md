@@ -1,14 +1,19 @@
 ## How to use
 
-To look at pprof profiles and disasm:
+To look at pprof profiles and Go disasm:
 ```bash
 cd gosrc
 # generate gosrc.test binary
 go test -c .
 # run all tests that match `.` regex, store profile
 ./gosrc.test -test.bench=. -test.cpuprofile=profile.prof
-# pprof web interface, also pass binary to get disasm access
+# pprof web interface, also pass binary to get Go disasm access
 go tool pprof -http :9898 gosrc.test profile.prof
+```
+
+To look at x86 disasm:
+```bash
+objdump -d -M intel -j .text gosrc.test > gosrc.asm
 ```
 
 ## Benchmarks
