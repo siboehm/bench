@@ -36,7 +36,7 @@ Go has infinite function stacks and resizing the stack comes with a big [penalty
 
 ### `gosrc/bandwidth`
 
-Trying to test: Bandwidth of Cache and RAM when iterating through an int64 array.
+Trying to test: Bandwidth of Cache and RAM when iterating through an int64 array sequentially.
 
 We run it with:
 1. small chunks per thread (~256KB), which should stay cached in L1d.
