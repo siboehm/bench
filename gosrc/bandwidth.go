@@ -25,17 +25,8 @@ func BenchmarkBandwidthSingleThread(b *testing.B, size int) {
 	}
 }
 
-func benchmarkBandwidthMultiThread(b *testing.B, thread, size int) {
-	numGoroutines := thread
-
-	array := make([]int64, size)
-
-	for i := range array {
-		array[i] = int64(i) + ResultInt64
-	}
+func benchmarkBandwidthMultiThread(b *testing.B, numGoroutines, chunkSize int, array []int64) {
 	resultsInterim := make([]int64, numGoroutines)
-	chunkSize := len(array) / numGoroutines
-
 	b.ResetTimer()
 
 	for j := 0; j < b.N; j++ {
@@ -66,31 +57,38 @@ func benchmarkBandwidthMultiThread(b *testing.B, thread, size int) {
 	}
 }
 
-// array ends up being ~4MB
-const cacheableSize = 1 << 19
+// ~250KB
+const cacheableChunkSize = 1 << 15
 
-// array ends up being ~1GB
-const nonCacheableSize = 1 << 27
+// ~17MB
+const nonCacheableChunkSize = 1 << 21
 
 func main() {
-	sizes := []int{cacheableSize, nonCacheableSize}
+	sizes := []int{cacheableChunkSize, nonCacheableChunkSize}
 
 	for _, size := range sizes {
 		res := testing.Benchmark(func(b *testing.B) {
 			BenchmarkBandwidthSingleThread(b, size)
 		})
 		fmt.Printf("Array: %.2fMB, single-thread Impl, BW: %.2fGB/s\n",
-			float64(size)*8/1e6, float64(size)/float64(res.NsPerOp()))
+			float64(size)*8/1e6, float64(size)*8/float64(res.NsPerOp()))
 	}
 
 	threads := []int{1, 2, 4, 8, 10, 16, 32, 64}
 
+	// init array
+	array := make([]int64, threads[len(threads)-1]*nonCacheableChunkSize)
+	for i := range array {
+		array[i] = int64(i) + ResultInt64
+	}
+
 	for _, size := range sizes {
 		for _, numThreads := range threads {
 			res := testing.Benchmark(func(b *testing.B) {
-				benchmarkBandwidthMultiThread(b, numThreads, size)
+				benchmarkBandwidthMultiThread(b, numThreads, size, array[0:size*numThreads])
 			})
-			fmt.Printf("Array: %.2fMB, Threads: %d, BW: %.2fGB/s\n", float64(size)*8/1e6, numThreads, float64(size)/float64(res.NsPerOp()))
+			sizeBytes := float64(size) * float64(numThreads) * 8
+			fmt.Printf("Array: %7.2fMB, Threads: %2.d, BW: %6.2fGB/s, runs: %d\n", sizeBytes/1e6, numThreads, sizeBytes/float64(res.NsPerOp()), res.N)
 		}
 	}
 }
