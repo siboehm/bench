@@ -8,9 +8,7 @@ import (
 
 var ResultInt64 int64
 
-const size = 1 << 26
-
-func BenchmarkBandwidthSingleThread(b *testing.B) {
+func BenchmarkBandwidthSingleThread(b *testing.B, size int) {
 	array := make([]int64, size)
 
 	for i := range array {
@@ -27,7 +25,7 @@ func BenchmarkBandwidthSingleThread(b *testing.B) {
 	}
 }
 
-func benchmarkBandwidthMultiThread(b *testing.B, thread int) {
+func benchmarkBandwidthMultiThread(b *testing.B, thread, size int) {
 	numGoroutines := thread
 
 	array := make([]int64, size)
@@ -68,44 +66,31 @@ func benchmarkBandwidthMultiThread(b *testing.B, thread int) {
 	}
 }
 
-func BenchmarkBandwidth1Thread(b *testing.B) {
-	benchmarkBandwidthMultiThread(b, 1)
-}
+// array ends up being ~4MB
+const cacheableSize = 1 << 19
 
-func BenchmarkBandwidth2Thread(b *testing.B) {
-	benchmarkBandwidthMultiThread(b, 2)
-}
-
-func BenchmarkBandwidth4Thread(b *testing.B) {
-	benchmarkBandwidthMultiThread(b, 4)
-}
-
-func BenchmarkBandwidth8Thread(b *testing.B) {
-	benchmarkBandwidthMultiThread(b, 8)
-}
-
-func BenchmarkBandwidth10Thread(b *testing.B) {
-	benchmarkBandwidthMultiThread(b, 10)
-}
+// array ends up being ~1GB
+const nonCacheableSize = 1 << 27
 
 func main() {
-	// calculate final bandwidth
-	sizeInBytes := int64(size) * 8
-	fmt.Printf("Size of array: %.2fGB\n", float64(sizeInBytes)/1e9)
-	println("Bandwidth in GB/s:")
-	res := testing.Benchmark(BenchmarkBandwidth1Thread)
-	oneThreadBandwidth := sizeInBytes / res.NsPerOp()
-	println("1 thread:", oneThreadBandwidth)
-	res = testing.Benchmark(BenchmarkBandwidth2Thread)
-	twoThreadBandwidth := sizeInBytes / res.NsPerOp()
-	println("2 threads:", twoThreadBandwidth)
-	res = testing.Benchmark(BenchmarkBandwidth4Thread)
-	fourThreadBandwidth := sizeInBytes / res.NsPerOp()
-	println("4 threads:", fourThreadBandwidth)
-	res = testing.Benchmark(BenchmarkBandwidth8Thread)
-	eightThreadBandwidth := sizeInBytes / res.NsPerOp()
-	println("8 threads:", eightThreadBandwidth)
-	res = testing.Benchmark(BenchmarkBandwidth10Thread)
-	tenThreadBandwidth := sizeInBytes / res.NsPerOp()
-	println("10 threads:", tenThreadBandwidth)
+	sizes := []int{cacheableSize, nonCacheableSize}
+
+	for _, size := range sizes {
+		res := testing.Benchmark(func(b *testing.B) {
+			BenchmarkBandwidthSingleThread(b, size)
+		})
+		fmt.Printf("Array: %.2fMB, single-thread Impl, BW: %.2fGB/s\n",
+			float64(size)*8/1e6, float64(size)/float64(res.NsPerOp()))
+	}
+
+	threads := []int{1, 2, 4, 8, 10, 16, 32, 64}
+
+	for _, size := range sizes {
+		for _, numThreads := range threads {
+			res := testing.Benchmark(func(b *testing.B) {
+				benchmarkBandwidthMultiThread(b, numThreads, size)
+			})
+			fmt.Printf("Array: %.2fMB, Threads: %d, BW: %.2fGB/s\n", float64(size)*8/1e6, numThreads, float64(size)/float64(res.NsPerOp()))
+		}
+	}
 }
