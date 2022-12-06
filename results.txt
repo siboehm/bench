@@ -4,11 +4,31 @@ goos: linux
 goarch: amd64
 pkg: benchmarks/gosrc
 cpu: AMD EPYC 7513 32-Core Processor                
-BenchmarkFunctionCallNoInline-128          	697375345	         1.646 ns/op
-BenchmarkFunctionCallInline-128            	1000000000	         0.5548 ns/op
-BenchmarkStructAccessSequential-128        	       1	1191421980 ns/op
-BenchmarkStructAccessNonSequential-128     	       1	2200328449 ns/op
-BenchmarkNoTypeAssert-128                  	693675432	         1.652 ns/op
-BenchmarkTypeAssert-128                    	714544965	         1.649 ns/op
+BenchmarkFunctionCallNoInline-128          	709000700	         1.649 ns/op
+BenchmarkFunctionCallInline-128            	1000000000	         0.5517 ns/op
+BenchmarkStructAccessSequential-128        	       1	1166424309 ns/op
+BenchmarkStructAccessNonSequential-128     	       1	2206181775 ns/op
 PASS
-ok  	benchmarks/gosrc	8.044s
+ok  	benchmarks/gosrc	8.078s
+BANDWIDTH BENCHMARK RESULTS
+
+Chunk size:    0.3MB
+Arraysize:    0.26MB, numThreads:  1, bandwidth:  14.56GB/s, runs: 66
+Arraysize:    0.52MB, numThreads:  2, bandwidth:  23.33GB/s, runs: 66
+Arraysize:    1.05MB, numThreads:  4, bandwidth:  44.70GB/s, runs: 49
+Arraysize:    2.10MB, numThreads:  8, bandwidth:  87.79GB/s, runs: 50
+Arraysize:    2.62MB, numThreads: 10, bandwidth: 109.31GB/s, runs: 48
+Arraysize:    4.19MB, numThreads: 16, bandwidth: 171.49GB/s, runs: 42
+Arraysize:    8.39MB, numThreads: 32, bandwidth: 302.35GB/s, runs: 48
+Arraysize:   16.78MB, numThreads: 64, bandwidth: 305.59GB/s, runs: 22
+
+Chunk size:   16.8MB
+Arraysize:   16.78MB, numThreads:  1, bandwidth:  14.44GB/s, runs: 1
+Arraysize:   33.55MB, numThreads:  2, bandwidth:  29.12GB/s, runs: 1
+Arraysize:   67.11MB, numThreads:  4, bandwidth:  56.11GB/s, runs: 1
+Arraysize:  134.22MB, numThreads:  8, bandwidth:  88.01GB/s, runs: 1
+Arraysize:  167.77MB, numThreads: 10, bandwidth: 120.19GB/s, runs: 1
+Arraysize:  268.44MB, numThreads: 16, bandwidth:  95.32GB/s, runs: 1
+Arraysize:  536.87MB, numThreads: 32, bandwidth: 121.51GB/s, runs: 1
+Arraysize: 1073.74MB, numThreads: 64, bandwidth: 100.34GB/s, runs: 1
+
