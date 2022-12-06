@@ -8,4 +8,7 @@ printf 'Results file: %s\n\n' "$resultfile"
 pushd gosrc
 printf 'GOSRC BENCHMARK RESULTS\n\n' > "$resultfile"
 go test -bench=. | tee -a "$resultfile"
+
+printf 'BANDWIDTH BENCHMARK RESULTS\n\n' >> "$resultfile"
+go run bandwidth.go | tee -a "$resultfile"
 popd
