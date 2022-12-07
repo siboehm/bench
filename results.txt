@@ -1,45 +1,95 @@
+BENCH RESULTS
+
+Architecture:                    x86_64
+CPU op-mode(s):                  32-bit, 64-bit
+Byte Order:                      Little Endian
+Address sizes:                   48 bits physical, 48 bits virtual
+CPU(s):                          128
+On-line CPU(s) list:             0-127
+Thread(s) per core:              2
+Core(s) per socket:              32
+Socket(s):                       2
+NUMA node(s):                    2
+Vendor ID:                       AuthenticAMD
+CPU family:                      25
+Model:                           1
+Model name:                      AMD EPYC 7513 32-Core Processor
+Stepping:                        1
+Frequency boost:                 enabled
+CPU MHz:                         1499.646
+CPU max MHz:                     2600.0000
+CPU min MHz:                     1500.0000
+BogoMIPS:                        5200.05
+Virtualization:                  AMD-V
+L1d cache:                       2 MiB
+L1i cache:                       2 MiB
+L2 cache:                        32 MiB
+L3 cache:                        256 MiB
+NUMA node0 CPU(s):               0-31,64-95
+NUMA node1 CPU(s):               32-63,96-127
+Vulnerability Itlb multihit:     Not affected
+Vulnerability L1tf:              Not affected
+Vulnerability Mds:               Not affected
+Vulnerability Meltdown:          Not affected
+Vulnerability Mmio stale data:   Not affected
+Vulnerability Retbleed:          Not affected
+Vulnerability Spec store bypass: Mitigation; Speculative Store Bypass disabled via prctl and seccomp
+Vulnerability Spectre v1:        Mitigation; usercopy/swapgs barriers and __user pointer sanitization
+Vulnerability Spectre v2:        Mitigation; Retpolines, IBPB conditional, IBRS_FW, STIBP always-on, RSB filling, PBRSB-eIBRS Not affected
+Vulnerability Srbds:             Not affected
+Vulnerability Tsx async abort:   Not affected
+Flags:                           fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc cpuid extd_apicid aperfmperf pni pclmulqdq monitor ssse3 fma cx16 pcid sse4_1 sse4_2 x2apic movbe popcnt aes xsave avx f16c rdrand lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs skinit wdt tce topoext perfctr_core perfctr_nb bpext perfctr_llc mwaitx cpb cat_l3 cdp_l3 invpcid_single hw_pstate ssbd mba ibrs ibpb stibp vmmcall fsgsbase bmi1 avx2 smep bmi2 invpcid cqm rdt_a rdseed adx smap clflushopt clwb sha_ni xsaveopt xsavec xgetbv1 xsaves cqm_llc cqm_occup_llc cqm_mbm_total cqm_mbm_local clzero irperf xsaveerptr wbnoinvd arat npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold v_vmsave_vmload vgif umip pku ospke vaes vpclmulqdq rdpid overflow_recov succor smca
+
+
 GOSRC BENCHMARK RESULTS
 
-goos: darwin
-goarch: arm64
-pkg: bench
-BenchmarkFunctionCallNoInline-10         	1000000000	         0.9346 ns/op
-BenchmarkFunctionCallInline-10           	1000000000	         0.6244 ns/op
-BenchmarkStructAccessSequential-10       	       1	1837929417 ns/op
-BenchmarkStructAccessNonSequential-10    	       1	1633396250 ns/op
+goos: linux
+goarch: amd64
+pkg: benchmarks/gosrc
+cpu: AMD EPYC 7513 32-Core Processor                
+BenchmarkFunctionCallNoInline-128          	688824951	         1.646 ns/op
+BenchmarkFunctionCallInline-128            	1000000000	         0.5502 ns/op
+BenchmarkStructAccessSequential-128        	       1	1198461025 ns/op
+BenchmarkStructAccessNonSequential-128     	       1	2167804782 ns/op
+BenchmarkNoTypeAssert-128                  	703035850	         1.640 ns/op
+BenchmarkTypeAssert-128                    	705142525	         1.647 ns/op
 PASS
-ok  	bench	5.378s
+ok  	benchmarks/gosrc	7.996s
+
+
 BANDWIDTH BENCHMARK RESULTS
 
 Chunk size:    0.3MB
-Arraysize:    0.26MB, numThreads:  1, bandwidth:  25.64GB/s, runs: 100
-Arraysize:    0.52MB, numThreads:  2, bandwidth:  49.59GB/s, runs: 100
-Arraysize:    1.05MB, numThreads:  4, bandwidth:  96.28GB/s, runs: 100
-Arraysize:    2.10MB, numThreads:  8, bandwidth: 190.25GB/s, runs: 96
-Arraysize:    2.62MB, numThreads: 10, bandwidth: 145.21GB/s, runs: 57
-Arraysize:    4.19MB, numThreads: 16, bandwidth: 189.25GB/s, runs: 48
-Arraysize:    8.39MB, numThreads: 32, bandwidth: 192.57GB/s, runs: 26
-Arraysize:   16.78MB, numThreads: 64, bandwidth: 200.57GB/s, runs: 13
+Arraysize:    0.26MB, numThreads:  1, bandwidth:  14.60GB/s, runs: 66
+Arraysize:    0.52MB, numThreads:  2, bandwidth:  24.05GB/s, runs: 46
+Arraysize:    1.05MB, numThreads:  4, bandwidth:  44.65GB/s, runs: 49
+Arraysize:    2.10MB, numThreads:  8, bandwidth:  87.54GB/s, runs: 50
+Arraysize:    2.62MB, numThreads: 10, bandwidth: 108.47GB/s, runs: 50
+Arraysize:    4.19MB, numThreads: 16, bandwidth: 172.73GB/s, runs: 50
+Arraysize:    8.39MB, numThreads: 32, bandwidth: 233.59GB/s, runs: 30
+Arraysize:   16.78MB, numThreads: 64, bandwidth: 380.36GB/s, runs: 24
 
 Chunk size:   16.8MB
-Arraysize:   16.78MB, numThreads:  1, bandwidth:  25.44GB/s, runs: 2
-Arraysize:   33.55MB, numThreads:  2, bandwidth:  49.93GB/s, runs: 2
-Arraysize:   67.11MB, numThreads:  4, bandwidth:  98.54GB/s, runs: 2
-Arraysize:  134.22MB, numThreads:  8, bandwidth: 116.96GB/s, runs: 1
-Arraysize:  167.77MB, numThreads: 10, bandwidth: 120.01GB/s, runs: 1
-Arraysize:  268.44MB, numThreads: 16, bandwidth: 123.56GB/s, runs: 1
-Arraysize:  536.87MB, numThreads: 32, bandwidth: 123.74GB/s, runs: 1
-Arraysize: 1073.74MB, numThreads: 64, bandwidth: 124.72GB/s, runs: 1
+Arraysize:   16.78MB, numThreads:  1, bandwidth:  14.35GB/s, runs: 1
+Arraysize:   33.55MB, numThreads:  2, bandwidth:  27.96GB/s, runs: 1
+Arraysize:   67.11MB, numThreads:  4, bandwidth:  54.50GB/s, runs: 1
+Arraysize:  134.22MB, numThreads:  8, bandwidth:  93.97GB/s, runs: 1
+Arraysize:  167.77MB, numThreads: 10, bandwidth:  96.11GB/s, runs: 1
+Arraysize:  268.44MB, numThreads: 16, bandwidth: 108.59GB/s, runs: 1
+Arraysize:  536.87MB, numThreads: 32, bandwidth: 114.62GB/s, runs: 1
+Arraysize: 1073.74MB, numThreads: 64, bandwidth: 104.76GB/s, runs: 1
+
+
 
 C BENCHMARK RESULTS
 
 ------------------------------------------------------
 Benchmark            Time             CPU   Iterations
 ------------------------------------------------------
-BM_Expf/-20       2.57 ns         2.57 ns    266175458
-BM_Expf/-8        2.56 ns         2.56 ns    273348875
-BM_Expf/-1        2.56 ns         2.56 ns    272894908
-BM_Expf/0         2.44 ns         2.44 ns    286217795
-BM_Expf/1         2.45 ns         2.45 ns    284379443
-BM_Expf/8         2.45 ns         2.45 ns    286365329
-BM_Expf/20        2.46 ns         2.46 ns    284828411
+BM_Expf/-20       5.18 ns         5.18 ns    131411941
+BM_Expf/-8        5.19 ns         5.18 ns    135154573
+BM_Expf/-1        5.18 ns         5.18 ns    135162272
+BM_Expf/0         5.18 ns         5.18 ns    135178611
+BM_Expf/1         5.18 ns         5.18 ns    135173730
+BM_Expf/8         5.18 ns         5.18 ns    135076515
+BM_Expf/20        5.18 ns         5.18 ns    134974937

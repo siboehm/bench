@@ -4,16 +4,21 @@ set -euo pipefail
 
 resultfile=$(realpath results.txt)
 printf 'Results file: %s\n\n' "$resultfile"
+printf 'BENCH RESULTS\n\n' > "$resultfile"
+
+if command -v lscpu; then
+	lscpu >> $resultfile
+fi
 
 pushd gosrc
-printf 'GOSRC BENCHMARK RESULTS\n\n' > "$resultfile"
+printf '\n\nGOSRC BENCHMARK RESULTS\n\n' >> "$resultfile"
 go test -bench=. | tee -a "$resultfile"
 
-printf 'BANDWIDTH BENCHMARK RESULTS\n\n' >> "$resultfile"
+printf '\n\nBANDWIDTH BENCHMARK RESULTS\n\n' >> "$resultfile"
 go run bandwidth.go | tee -a "$resultfile"
 popd
 
-printf 'C BENCHMARK RESULTS\n\n' >> "$resultfile"
+printf '\n\nC BENCHMARK RESULTS\n\n' >> "$resultfile"
 pushd csrc
 mkdir -p build
 pushd build && cmake .. && make
