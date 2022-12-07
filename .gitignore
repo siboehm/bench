@@ -3,6 +3,10 @@
 
 # profiler output
 *.prof
+*.pprof
+
+# Cpp build output
+*/build/
 
 # go test binary
 gosrc/gosrc.test

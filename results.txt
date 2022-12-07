@@ -1,34 +1,45 @@
 GOSRC BENCHMARK RESULTS
 
-goos: linux
-goarch: amd64
-pkg: benchmarks/gosrc
-cpu: AMD EPYC 7513 32-Core Processor                
-BenchmarkFunctionCallNoInline-128          	709000700	         1.649 ns/op
-BenchmarkFunctionCallInline-128            	1000000000	         0.5517 ns/op
-BenchmarkStructAccessSequential-128        	       1	1166424309 ns/op
-BenchmarkStructAccessNonSequential-128     	       1	2206181775 ns/op
+goos: darwin
+goarch: arm64
+pkg: bench
+BenchmarkFunctionCallNoInline-10         	1000000000	         0.9346 ns/op
+BenchmarkFunctionCallInline-10           	1000000000	         0.6244 ns/op
+BenchmarkStructAccessSequential-10       	       1	1837929417 ns/op
+BenchmarkStructAccessNonSequential-10    	       1	1633396250 ns/op
 PASS
-ok  	benchmarks/gosrc	8.078s
+ok  	bench	5.378s
 BANDWIDTH BENCHMARK RESULTS
 
 Chunk size:    0.3MB
-Arraysize:    0.26MB, numThreads:  1, bandwidth:  14.56GB/s, runs: 66
-Arraysize:    0.52MB, numThreads:  2, bandwidth:  23.33GB/s, runs: 66
-Arraysize:    1.05MB, numThreads:  4, bandwidth:  44.70GB/s, runs: 49
-Arraysize:    2.10MB, numThreads:  8, bandwidth:  87.79GB/s, runs: 50
-Arraysize:    2.62MB, numThreads: 10, bandwidth: 109.31GB/s, runs: 48
-Arraysize:    4.19MB, numThreads: 16, bandwidth: 171.49GB/s, runs: 42
-Arraysize:    8.39MB, numThreads: 32, bandwidth: 302.35GB/s, runs: 48
-Arraysize:   16.78MB, numThreads: 64, bandwidth: 305.59GB/s, runs: 22
+Arraysize:    0.26MB, numThreads:  1, bandwidth:  25.64GB/s, runs: 100
+Arraysize:    0.52MB, numThreads:  2, bandwidth:  49.59GB/s, runs: 100
+Arraysize:    1.05MB, numThreads:  4, bandwidth:  96.28GB/s, runs: 100
+Arraysize:    2.10MB, numThreads:  8, bandwidth: 190.25GB/s, runs: 96
+Arraysize:    2.62MB, numThreads: 10, bandwidth: 145.21GB/s, runs: 57
+Arraysize:    4.19MB, numThreads: 16, bandwidth: 189.25GB/s, runs: 48
+Arraysize:    8.39MB, numThreads: 32, bandwidth: 192.57GB/s, runs: 26
+Arraysize:   16.78MB, numThreads: 64, bandwidth: 200.57GB/s, runs: 13
 
 Chunk size:   16.8MB
-Arraysize:   16.78MB, numThreads:  1, bandwidth:  14.44GB/s, runs: 1
-Arraysize:   33.55MB, numThreads:  2, bandwidth:  29.12GB/s, runs: 1
-Arraysize:   67.11MB, numThreads:  4, bandwidth:  56.11GB/s, runs: 1
-Arraysize:  134.22MB, numThreads:  8, bandwidth:  88.01GB/s, runs: 1
-Arraysize:  167.77MB, numThreads: 10, bandwidth: 120.19GB/s, runs: 1
-Arraysize:  268.44MB, numThreads: 16, bandwidth:  95.32GB/s, runs: 1
-Arraysize:  536.87MB, numThreads: 32, bandwidth: 121.51GB/s, runs: 1
-Arraysize: 1073.74MB, numThreads: 64, bandwidth: 100.34GB/s, runs: 1
+Arraysize:   16.78MB, numThreads:  1, bandwidth:  25.44GB/s, runs: 2
+Arraysize:   33.55MB, numThreads:  2, bandwidth:  49.93GB/s, runs: 2
+Arraysize:   67.11MB, numThreads:  4, bandwidth:  98.54GB/s, runs: 2
+Arraysize:  134.22MB, numThreads:  8, bandwidth: 116.96GB/s, runs: 1
+Arraysize:  167.77MB, numThreads: 10, bandwidth: 120.01GB/s, runs: 1
+Arraysize:  268.44MB, numThreads: 16, bandwidth: 123.56GB/s, runs: 1
+Arraysize:  536.87MB, numThreads: 32, bandwidth: 123.74GB/s, runs: 1
+Arraysize: 1073.74MB, numThreads: 64, bandwidth: 124.72GB/s, runs: 1
 
+C BENCHMARK RESULTS
+
+------------------------------------------------------
+Benchmark            Time             CPU   Iterations
+------------------------------------------------------
+BM_Expf/-20       2.57 ns         2.57 ns    266175458
+BM_Expf/-8        2.56 ns         2.56 ns    273348875
+BM_Expf/-1        2.56 ns         2.56 ns    272894908
+BM_Expf/0         2.44 ns         2.44 ns    286217795
+BM_Expf/1         2.45 ns         2.45 ns    284379443
+BM_Expf/8         2.45 ns         2.45 ns    286365329
+BM_Expf/20        2.46 ns         2.46 ns    284828411

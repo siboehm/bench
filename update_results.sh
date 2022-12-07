@@ -12,3 +12,10 @@ go test -bench=. | tee -a "$resultfile"
 printf 'BANDWIDTH BENCHMARK RESULTS\n\n' >> "$resultfile"
 go run bandwidth.go | tee -a "$resultfile"
 popd
+
+printf 'C BENCHMARK RESULTS\n\n' >> "$resultfile"
+pushd csrc
+mkdir -p build
+pushd build && cmake .. && make
+./bench_exp | tee -a "$resultfile"
+popd && popd
