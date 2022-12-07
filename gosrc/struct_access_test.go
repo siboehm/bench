@@ -28,8 +28,8 @@ type NonSequential struct {
 	b1, c1, a1, d1     int32
 }
 
-// 4 * 16 * 4B = 256B per struct. 4 structs are 1KB, and we create 4MB of them.
-const sliceLen = 4 * 1024 * 4 * 1024
+// 4 * 16 * 4B = 256B per struct. We create 536 MB of data total.
+const sliceLen = 4 * 1024 * 4 * 128
 
 //go:noinline
 func sumAsSequential(s Sequential) int32 {
