@@ -16,7 +16,7 @@ Model:                           1
 Model name:                      AMD EPYC 7513 32-Core Processor
 Stepping:                        1
 Frequency boost:                 enabled
-CPU MHz:                         1499.646
+CPU MHz:                         1499.857
 CPU max MHz:                     2600.0000
 CPU min MHz:                     1500.0000
 BogoMIPS:                        5200.05
@@ -47,37 +47,35 @@ goos: linux
 goarch: amd64
 pkg: benchmarks/gosrc
 cpu: AMD EPYC 7513 32-Core Processor                
-BenchmarkFunctionCallNoInline-128          	688824951	         1.646 ns/op
-BenchmarkFunctionCallInline-128            	1000000000	         0.5502 ns/op
-BenchmarkStructAccessSequential-128        	       1	1198461025 ns/op
-BenchmarkStructAccessNonSequential-128     	       1	2167804782 ns/op
-BenchmarkNoTypeAssert-128                  	703035850	         1.640 ns/op
-BenchmarkTypeAssert-128                    	705142525	         1.647 ns/op
+BenchmarkFunctionCallNoInline-128          	700724504	         1.643 ns/op
+BenchmarkFunctionCallInline-128            	1000000000	         0.5546 ns/op
+BenchmarkStructAccessSequential-128        	      48	  25503869 ns/op
+BenchmarkStructAccessNonSequential-128     	      42	  24598362 ns/op
 PASS
-ok  	benchmarks/gosrc	7.996s
+ok  	benchmarks/gosrc	8.346s
 
 
 BANDWIDTH BENCHMARK RESULTS
 
 Chunk size:    0.3MB
-Arraysize:    0.26MB, numThreads:  1, bandwidth:  14.60GB/s, runs: 66
-Arraysize:    0.52MB, numThreads:  2, bandwidth:  24.05GB/s, runs: 46
-Arraysize:    1.05MB, numThreads:  4, bandwidth:  44.65GB/s, runs: 49
-Arraysize:    2.10MB, numThreads:  8, bandwidth:  87.54GB/s, runs: 50
-Arraysize:    2.62MB, numThreads: 10, bandwidth: 108.47GB/s, runs: 50
-Arraysize:    4.19MB, numThreads: 16, bandwidth: 172.73GB/s, runs: 50
-Arraysize:    8.39MB, numThreads: 32, bandwidth: 233.59GB/s, runs: 30
-Arraysize:   16.78MB, numThreads: 64, bandwidth: 380.36GB/s, runs: 24
+Arraysize:    0.26MB, numThreads:  1, bandwidth:  14.59GB/s, runs: 66
+Arraysize:    0.52MB, numThreads:  2, bandwidth:  22.68GB/s, runs: 49
+Arraysize:    1.05MB, numThreads:  4, bandwidth:  53.74GB/s, runs: 60
+Arraysize:    2.10MB, numThreads:  8, bandwidth:  98.95GB/s, runs: 48
+Arraysize:    2.62MB, numThreads: 10, bandwidth: 109.28GB/s, runs: 48
+Arraysize:    4.19MB, numThreads: 16, bandwidth: 173.26GB/s, runs: 46
+Arraysize:    8.39MB, numThreads: 32, bandwidth: 295.10GB/s, runs: 39
+Arraysize:   16.78MB, numThreads: 64, bandwidth: 393.06GB/s, runs: 25
 
 Chunk size:   16.8MB
-Arraysize:   16.78MB, numThreads:  1, bandwidth:  14.35GB/s, runs: 1
-Arraysize:   33.55MB, numThreads:  2, bandwidth:  27.96GB/s, runs: 1
-Arraysize:   67.11MB, numThreads:  4, bandwidth:  54.50GB/s, runs: 1
-Arraysize:  134.22MB, numThreads:  8, bandwidth:  93.97GB/s, runs: 1
-Arraysize:  167.77MB, numThreads: 10, bandwidth:  96.11GB/s, runs: 1
-Arraysize:  268.44MB, numThreads: 16, bandwidth: 108.59GB/s, runs: 1
-Arraysize:  536.87MB, numThreads: 32, bandwidth: 114.62GB/s, runs: 1
-Arraysize: 1073.74MB, numThreads: 64, bandwidth: 104.76GB/s, runs: 1
+Arraysize:   16.78MB, numThreads:  1, bandwidth:  14.44GB/s, runs: 1
+Arraysize:   33.55MB, numThreads:  2, bandwidth:  29.09GB/s, runs: 1
+Arraysize:   67.11MB, numThreads:  4, bandwidth:  57.62GB/s, runs: 1
+Arraysize:  134.22MB, numThreads:  8, bandwidth:  94.13GB/s, runs: 1
+Arraysize:  167.77MB, numThreads: 10, bandwidth: 133.34GB/s, runs: 1
+Arraysize:  268.44MB, numThreads: 16, bandwidth: 106.52GB/s, runs: 1
+Arraysize:  536.87MB, numThreads: 32, bandwidth: 118.59GB/s, runs: 1
+Arraysize: 1073.74MB, numThreads: 64, bandwidth: 104.82GB/s, runs: 1
 
 
 
@@ -86,10 +84,10 @@ C BENCHMARK RESULTS
 ------------------------------------------------------
 Benchmark            Time             CPU   Iterations
 ------------------------------------------------------
-BM_Expf/-20       5.18 ns         5.18 ns    131411941
-BM_Expf/-8        5.19 ns         5.18 ns    135154573
-BM_Expf/-1        5.18 ns         5.18 ns    135162272
-BM_Expf/0         5.18 ns         5.18 ns    135178611
-BM_Expf/1         5.18 ns         5.18 ns    135173730
-BM_Expf/8         5.18 ns         5.18 ns    135076515
-BM_Expf/20        5.18 ns         5.18 ns    134974937
+BM_Expf/-20       5.18 ns         5.18 ns    132431861
+BM_Expf/-8        5.18 ns         5.18 ns    135098127
+BM_Expf/-1        5.18 ns         5.18 ns    134983995
+BM_Expf/0         5.18 ns         5.18 ns    135068175
+BM_Expf/1         5.19 ns         5.18 ns    135012894
+BM_Expf/8         5.18 ns         5.18 ns    135087072
+BM_Expf/20        5.18 ns         5.18 ns    135034798

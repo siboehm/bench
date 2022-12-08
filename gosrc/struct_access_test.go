@@ -32,42 +32,42 @@ type NonSequential struct {
 const sliceLen = 4 * 1024 * 4 * 128
 
 //go:noinline
-func sumAsSequential(s Sequential) int32 {
+func sumAsSequential(s *Sequential) int32 {
 	return s.a0 + s.a1 + s.a2 + s.a3 + s.a4 + s.a5 + s.a6 + s.a7 + s.a8 + s.a9 + s.a10 + s.a11 + s.a12 + s.a13 + s.a14 + s.a15
 }
 
 //go:noinline
-func sumAsNonSequential(s NonSequential) int32 {
+func sumAsNonSequential(s *NonSequential) int32 {
 	return s.a0 + s.a1 + s.a2 + s.a3 + s.a4 + s.a5 + s.a6 + s.a7 + s.a8 + s.a9 + s.a10 + s.a11 + s.a12 + s.a13 + s.a14 + s.a15
 }
 
 //go:noinline
-func sumBsSequential(s Sequential) int32 {
+func sumBsSequential(s *Sequential) int32 {
 	return s.b0 + s.b1 + s.b2 + s.b3 + s.b4 + s.b5 + s.b6 + s.b7 + s.b8 + s.b9 + s.b10 + s.b11 + s.b12 + s.b13 + s.b14 + s.b15
 }
 
 //go:noinline
-func sumBsNonSequential(s NonSequential) int32 {
+func sumBsNonSequential(s *NonSequential) int32 {
 	return s.b0 + s.b1 + s.b2 + s.b3 + s.b4 + s.b5 + s.b6 + s.b7 + s.b8 + s.b9 + s.b10 + s.b11 + s.b12 + s.b13 + s.b14 + s.b15
 }
 
 //go:noinline
-func sumCsSequential(s Sequential) int32 {
+func sumCsSequential(s *Sequential) int32 {
 	return s.c0 + s.c1 + s.c2 + s.c3 + s.c4 + s.c5 + s.c6 + s.c7 + s.c8 + s.c9 + s.c10 + s.c11 + s.c12 + s.c13 + s.c14 + s.c15
 }
 
 //go:noinline
-func sumCsNonSequential(s NonSequential) int32 {
+func sumCsNonSequential(s *NonSequential) int32 {
 	return s.c0 + s.c1 + s.c2 + s.c3 + s.c4 + s.c5 + s.c6 + s.c7 + s.c8 + s.c9 + s.c10 + s.c11 + s.c12 + s.c13 + s.c14 + s.c15
 }
 
 //go:noinline
-func sumDsSequential(s Sequential) int32 {
+func sumDsSequential(s *Sequential) int32 {
 	return s.d0 + s.d1 + s.d2 + s.d3 + s.d4 + s.d5 + s.d6 + s.d7 + s.d8 + s.d9 + s.d10 + s.d11 + s.d12 + s.d13 + s.d14 + s.d15
 }
 
 //go:noinline
-func sumDsNonSequential(s NonSequential) int32 {
+func sumDsNonSequential(s *NonSequential) int32 {
 	return s.d0 + s.d1 + s.d2 + s.d3 + s.d4 + s.d5 + s.d6 + s.d7 + s.d8 + s.d9 + s.d10 + s.d11 + s.d12 + s.d13 + s.d14 + s.d15
 }
 
@@ -78,10 +78,10 @@ func BenchmarkStructAccessSequential(b *testing.B) {
 	tmp := int32(0)
 	for i := 0; i < b.N; i++ {
 		for j := 0; j < sliceLen; j++ {
-			tmp += sumAsSequential(alignedSlice[j])
-			tmp += sumBsSequential(alignedSlice[j])
-			tmp += sumCsSequential(alignedSlice[j])
-			tmp += sumDsSequential(alignedSlice[j])
+			tmp += sumAsSequential(&alignedSlice[j])
+			tmp += sumBsSequential(&alignedSlice[j])
+			tmp += sumCsSequential(&alignedSlice[j])
+			tmp += sumDsSequential(&alignedSlice[j])
 		}
 	}
 	ResultInt32 += tmp
@@ -92,10 +92,10 @@ func BenchmarkStructAccessNonSequential(b *testing.B) {
 	tmp := int32(0)
 	for i := 0; i < b.N; i++ {
 		for j := 0; j < sliceLen; j++ {
-			tmp += sumAsNonSequential(unalignedSlice[j])
-			tmp += sumBsNonSequential(unalignedSlice[j])
-			tmp += sumCsNonSequential(unalignedSlice[j])
-			tmp += sumDsNonSequential(unalignedSlice[j])
+			tmp += sumAsNonSequential(&unalignedSlice[j])
+			tmp += sumBsNonSequential(&unalignedSlice[j])
+			tmp += sumCsNonSequential(&unalignedSlice[j])
+			tmp += sumDsNonSequential(&unalignedSlice[j])
 		}
 	}
 	ResultInt32 += tmp
