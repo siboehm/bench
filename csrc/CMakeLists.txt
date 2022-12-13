@@ -15,8 +15,10 @@ endif()
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(bench_exp benchmark_exp.cpp)
-
 find_package(benchmark REQUIRED)
 
+add_executable(bench_exp benchmark_exp.cpp)
 target_link_libraries(bench_exp benchmark::benchmark)
+
+add_executable(test_exp fast_exp_test.cpp)
+
