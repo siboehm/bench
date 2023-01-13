@@ -1,0 +1,97 @@
+BENCH RESULTS
+
+Architecture:                    x86_64
+CPU op-mode(s):                  32-bit, 64-bit
+Byte Order:                      Little Endian
+Address sizes:                   36 bits physical, 48 bits virtual
+CPU(s):                          4
+On-line CPU(s) list:             0-3
+Thread(s) per core:              1
+Core(s) per socket:              4
+Socket(s):                       1
+NUMA node(s):                    1
+Vendor ID:                       GenuineIntel
+CPU family:                      6
+Model:                           42
+Model name:                      Intel(R) Core(TM) i5-2400 CPU @ 3.10GHz
+Stepping:                        7
+CPU MHz:                         1596.305
+CPU max MHz:                     3100.0000
+CPU min MHz:                     1600.0000
+BogoMIPS:                        6185.73
+Virtualization:                  VT-x
+L1d cache:                       128 KiB
+L1i cache:                       128 KiB
+L2 cache:                        1 MiB
+L3 cache:                        6 MiB
+NUMA node0 CPU(s):               0-3
+Vulnerability Itlb multihit:     KVM: Vulnerable
+Vulnerability L1tf:              Mitigation; PTE Inversion
+Vulnerability Mds:               Mitigation; Clear CPU buffers; SMT disabled
+Vulnerability Meltdown:          Mitigation; PTI
+Vulnerability Mmio stale data:   Not affected
+Vulnerability Spec store bypass: Mitigation; Speculative Store Bypass disabled via prctl and seccomp
+Vulnerability Spectre v1:        Mitigation; usercopy/swapgs barriers and __user pointer sanitization
+Vulnerability Spectre v2:        Mitigation; Retpolines, IBPB conditional, IBRS_FW, STIBP disabled, RSB filling, PBRSB-eIBRS Not affected
+Vulnerability Srbds:             Not affected
+Vulnerability Tsx async abort:   Not affected
+Flags:                           fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ht tm pbe syscall nx rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic popcnt tsc_deadline_timer aes xsave avx lahf_lm epb pti ssbd ibrs ibpb stibp tpr_shadow vnmi flexpriority ept vpid xsaveopt dtherm arat pln pts md_clear flush_l1d
+
+
+GOSRC BENCHMARK RESULTS
+
+goos: linux
+goarch: amd64
+pkg: benchmarks/gosrc
+cpu: Intel(R) Core(TM) i5-2400 CPU @ 3.10GHz
+BenchmarkFunctionCallNoInline-4        	410838768	         2.918 ns/op
+BenchmarkFunctionCallInline-4          	1000000000	         0.7793 ns/op
+BenchmarkStructAccessSequential-4      	      20	  75149277 ns/op
+BenchmarkStructAccessNonSequential-4   	      14	  72691470 ns/op
+PASS
+ok  	benchmarks/gosrc	5.622s
+
+
+BANDWIDTH BENCHMARK RESULTS
+
+Chunk size:    0.3MB
+Arraysize:    0.26MB, numThreads:  1, bandwidth:   3.22GB/s, runs: 13
+Arraysize:    0.52MB, numThreads:  2, bandwidth:   6.43GB/s, runs: 13
+Arraysize:    1.05MB, numThreads:  4, bandwidth:  12.43GB/s, runs: 13
+Arraysize:    2.10MB, numThreads:  8, bandwidth:  11.72GB/s, runs: 6
+Arraysize:    2.62MB, numThreads: 10, bandwidth:  12.21GB/s, runs: 5
+Arraysize:    4.19MB, numThreads: 16, bandwidth:  12.21GB/s, runs: 3
+Arraysize:    8.39MB, numThreads: 32, bandwidth:  12.35GB/s, runs: 2
+Arraysize:   16.78MB, numThreads: 64, bandwidth:  12.54GB/s, runs: 1
+
+Chunk size:   16.8MB
+Arraysize:   16.78MB, numThreads:  1, bandwidth:   3.22GB/s, runs: 1
+Arraysize:   33.55MB, numThreads:  2, bandwidth:   6.47GB/s, runs: 1
+Arraysize:   67.11MB, numThreads:  4, bandwidth:  10.05GB/s, runs: 1
+Arraysize:  134.22MB, numThreads:  8, bandwidth:  10.09GB/s, runs: 1
+Arraysize:  167.77MB, numThreads: 10, bandwidth:  10.12GB/s, runs: 1
+Arraysize:  268.44MB, numThreads: 16, bandwidth:  10.13GB/s, runs: 1
+Arraysize:  536.87MB, numThreads: 32, bandwidth:  10.16GB/s, runs: 1
+Arraysize: 1073.74MB, numThreads: 64, bandwidth:  10.17GB/s, runs: 1
+
+
+
+C BENCHMARK RESULTS
+
+------------------------------------------------------------
+Benchmark                  Time             CPU   Iterations
+------------------------------------------------------------
+BM_ExpfApprox/-20       6.15 ns         6.15 ns    110792777
+BM_ExpfApprox/-8        6.15 ns         6.15 ns    113813458
+BM_ExpfApprox/-1        6.15 ns         6.15 ns    113813094
+BM_ExpfApprox/0         6.15 ns         6.15 ns    113828581
+BM_ExpfApprox/1         6.15 ns         6.15 ns    113831559
+BM_ExpfApprox/8         6.15 ns         6.15 ns    113827807
+BM_ExpfApprox/20        6.15 ns         6.15 ns    113780640
+BM_Expf/-20             7.14 ns         7.14 ns     98001233
+BM_Expf/-8              7.13 ns         7.13 ns     98013666
+BM_Expf/-1              7.13 ns         7.13 ns     98127169
+BM_Expf/0               7.14 ns         7.14 ns     97939533
+BM_Expf/1               7.13 ns         7.13 ns     98125251
+BM_Expf/8               7.13 ns         7.13 ns     98069113
+BM_Expf/20              7.13 ns         7.13 ns     98050048
