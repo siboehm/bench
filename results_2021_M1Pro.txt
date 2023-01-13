@@ -1,0 +1,60 @@
+BENCH RESULTS
+
+
+
+GOSRC BENCHMARK RESULTS
+
+goos: darwin
+goarch: arm64
+pkg: bench
+BenchmarkFunctionCallNoInline-10         	1000000000	         0.9318 ns/op
+BenchmarkFunctionCallInline-10           	1000000000	         0.6237 ns/op
+BenchmarkStructAccessSequential-10       	      48	  22643850 ns/op
+BenchmarkStructAccessNonSequential-10    	      51	  22690321 ns/op
+PASS
+ok  	bench	6.572s
+
+
+BANDWIDTH BENCHMARK RESULTS
+
+Chunk size:    0.3MB
+Arraysize:    0.26MB, numThreads:  1, bandwidth:  25.70GB/s, runs: 100
+Arraysize:    0.52MB, numThreads:  2, bandwidth:  49.83GB/s, runs: 100
+Arraysize:    1.05MB, numThreads:  4, bandwidth:  96.30GB/s, runs: 100
+Arraysize:    2.10MB, numThreads:  8, bandwidth: 189.53GB/s, runs: 100
+Arraysize:    2.62MB, numThreads: 10, bandwidth: 146.48GB/s, runs: 64
+Arraysize:    4.19MB, numThreads: 16, bandwidth: 190.18GB/s, runs: 46
+Arraysize:    8.39MB, numThreads: 32, bandwidth: 193.04GB/s, runs: 27
+Arraysize:   16.78MB, numThreads: 64, bandwidth: 199.76GB/s, runs: 13
+
+Chunk size:   16.8MB
+Arraysize:   16.78MB, numThreads:  1, bandwidth:  25.16GB/s, runs: 2
+Arraysize:   33.55MB, numThreads:  2, bandwidth:  49.68GB/s, runs: 2
+Arraysize:   67.11MB, numThreads:  4, bandwidth:  98.54GB/s, runs: 2
+Arraysize:  134.22MB, numThreads:  8, bandwidth: 118.71GB/s, runs: 1
+Arraysize:  167.77MB, numThreads: 10, bandwidth: 124.36GB/s, runs: 1
+Arraysize:  268.44MB, numThreads: 16, bandwidth: 121.46GB/s, runs: 1
+Arraysize:  536.87MB, numThreads: 32, bandwidth: 122.39GB/s, runs: 1
+Arraysize: 1073.74MB, numThreads: 64, bandwidth: 122.51GB/s, runs: 1
+
+
+
+C BENCHMARK RESULTS
+
+------------------------------------------------------------
+Benchmark                  Time             CPU   Iterations
+------------------------------------------------------------
+BM_ExpfApprox/-20       1.29 ns         1.29 ns    483325278
+BM_ExpfApprox/-8        1.29 ns         1.29 ns    543761118
+BM_ExpfApprox/-1        1.28 ns         1.28 ns    542425417
+BM_ExpfApprox/0         1.28 ns         1.28 ns    545987770
+BM_ExpfApprox/1         1.28 ns         1.28 ns    545719609
+BM_ExpfApprox/8         1.29 ns         1.29 ns    546153906
+BM_ExpfApprox/20        1.29 ns         1.29 ns    545898354
+BM_Expf/-20             2.56 ns         2.56 ns    273145149
+BM_Expf/-8              2.56 ns         2.56 ns    273318991
+BM_Expf/-1              2.56 ns         2.56 ns    273185657
+BM_Expf/0               2.44 ns         2.44 ns    286059893
+BM_Expf/1               2.44 ns         2.44 ns    286024827
+BM_Expf/8               2.44 ns         2.44 ns    286400478
+BM_Expf/20              2.45 ns         2.45 ns    286182691
