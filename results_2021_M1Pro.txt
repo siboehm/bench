@@ -7,6 +7,7 @@ GOSRC BENCHMARK RESULTS
 goos: darwin
 goarch: arm64
 pkg: bench
+BenchmarkCoGoCall-10                     	22900744	        46.02 ns/op
 BenchmarkFunctionCallNoInline-10         	1000000000	         0.9318 ns/op
 BenchmarkFunctionCallInline-10           	1000000000	         0.6237 ns/op
 BenchmarkStructAccessSequential-10       	      48	  22643850 ns/op
