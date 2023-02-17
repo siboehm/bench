@@ -1,5 +1,11 @@
+name: bench
 channels:
+  - pytorch
+  - nvidia
   - conda-forge
+  - nodefaults
 dependencies:
   - benchmark
   - cmake
+  - python
+  - jupyter
