@@ -17,6 +17,7 @@ import torch
 import pandas as pd
 from pathlib import Path
 from torch.profiler import profile, record_function, ProfilerActivity
+import time
 import math
 
 import matplotlib
@@ -87,12 +88,16 @@ def run_benchmark(profiling=False):
 
             for name, matrix_fun in MATRIX_TYPES:
                 matrix = matrix_fun(A_dense)
+                start_time = time.time()
                 with profile(
                     activities=[ProfilerActivity.CPU, ProfilerActivity.CUDA],
                     with_stack=profiling,
                     record_shapes=profiling,
                 ) as prof:
                     _ = torch.matmul(matrix, b)
+                torch.cuda.synchronize()
+                end_time = time.time()
+                print(f"  {name} took {end_time - start_time} seconds")
                 result = {
                     "size": size,
                     "percentage_nonzero": percentage_nonzero,
@@ -103,6 +108,7 @@ def run_benchmark(profiling=False):
                     "cpu_micros": prof.key_averages()
                     .total_average()
                     .self_cpu_time_total,
+                    "measured_time": end_time - start_time,
                 }
                 results.append(result)
                 if profiling:
@@ -149,15 +155,13 @@ g = sns.FacetGrid(
     sharey=True,
     sharex=False,
 )
-g.map(sns.lineplot, "size", f"{DEVICE}_millis", "name")
-g.map(
-    sns.scatterplot, "size", f"{DEVICE}_millis", "name", color="black", alpha=0.7, s=20
-)
+g.map(sns.lineplot, "size", "cuda_millis", "name")
+g.map(sns.scatterplot, "size", "cuda_millis", "name", color="black", alpha=0.7, s=20)
 g.set(yscale="log")
 
 # Set the titles and labels
 g.set_titles(col_template="{col_name}% Nonzero", fontweight="bold")
-g.set_axis_labels("Size", f"{DEVICE} ms")
+g.set_axis_labels("Size", "CUDA ms")
 
 # Add legend
 g.add_legend()
@@ -169,16 +173,16 @@ g.map(plt.grid, which="both", axis="both", ls="--", color="grey", alpha=0.5)
 # Show the plot
 plt.show()
 # save the plot
-g.savefig(f"torch_sparse_plot_{DEVICE}.png")
+g.savefig(f"torch_sparse_plot_cuda.png")
 
 # largest size only
 sub_df = df[df["size"] == df["size"].max()]
 g = sns.FacetGrid(sub_df, col="size", height=4, aspect=1.2, sharey=True, sharex=False)
-g.map(sns.lineplot, "percentage_nonzero", f"{DEVICE}_millis", "name")
+g.map(sns.lineplot, "percentage_nonzero", "cuda_millis", "name")
 g.map(
     sns.scatterplot,
     "percentage_nonzero",
-    f"{DEVICE}_millis",
+    "cuda_millis",
     "name",
     color="black",
     alpha=0.7,
@@ -188,7 +192,7 @@ g.set(yscale="log")
 
 # Set the titles and labels
 g.set_titles(col_template="Size: {col_name}x{col_name}", fontweight="bold")
-g.set_axis_labels("% nonzero", f"{DEVICE} ms")
+g.set_axis_labels("% nonzero", "CUDA ms")
 
 # Add legend
 g.add_legend()
@@ -199,7 +203,7 @@ g.map(plt.grid, which="both", axis="both", ls="--", color="grey", alpha=0.5)
 
 # Show the plot
 plt.show()
-g.savefig(f"torch_sparse_plot_largest_{DEVICE}.png")
+g.savefig("torch_sparse_plot_largest.png")
 # -
 
 
