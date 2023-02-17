@@ -4,6 +4,7 @@
 # profiler output
 *.prof
 *.pprof
+gpu/profiler_output/
 
 # Cpp build output
 */build/
