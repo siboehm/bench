@@ -9,3 +9,9 @@ dependencies:
   - cmake
   - python
   - jupyter
+  - pandas
+  - jupytext
+  - tensorboard
+  - pip
+  - pip:
+    - torch_tb_profiler
