@@ -7,7 +7,7 @@
 gpu/profiler_output/
 
 # Cpp build output
-*/build/
+**/build/
 
 # go test binary
 gosrc/gosrc.test
