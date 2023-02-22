@@ -4,6 +4,7 @@ A100 40GB SMX, 16x PCIe 4.0:
 ![](pcie.png)
 
 Device: NVIDIA A100-SXM4-40GB
+```
 ------- Running PCIe Normal ------
 
 Size: 32.0B Time: 46μs BW (Dev to Host): 0.69926 MB/s
@@ -90,3 +91,4 @@ Size: 134.2MB Time: 7023μs BW (Dev to Host): 19569.2 MB/s
 Size: 268.4MB Time: 14014μs BW (Dev to Host): 19614 MB/s
 Size: 536.9MB Time: 27994μs BW (Dev to Host): 19638 MB/s
 Size: 1.1GB Time: 55957μs BW (Dev to Host): 19648.9 MB/s
+```
