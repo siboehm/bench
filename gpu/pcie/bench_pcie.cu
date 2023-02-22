@@ -39,31 +39,24 @@ void runPcieNormal(int size, std::vector<std::chrono::nanoseconds> &time_data,
                    cudaStream_t stream_in, cudaStream_t stream_out) {
   int sizeBytes = size * sizeof(float);
 
-  float *in_host = (float *)malloc(sizeBytes);
   float *out_host = (float *)malloc(sizeBytes);
-  float *in_dev, *out_dev;
-  CUDA_CHECK(cudaMalloc((void **)&in_dev, sizeBytes));
+  float *out_dev;
   CUDA_CHECK(cudaMalloc((void **)&out_dev, sizeBytes));
 
   auto ts = std::chrono::system_clock::now();
 
-  CUDA_CHECK(cudaMemcpyAsync((void **)in_dev, in_host, sizeBytes,
-                             cudaMemcpyHostToDevice, stream_in));
   CUDA_CHECK(cudaMemcpyAsync((void **)out_host, out_dev, sizeBytes,
                              cudaMemcpyDeviceToHost, stream_out));
-  CUDA_CHECK(cudaStreamSynchronize(stream_in));
   CUDA_CHECK(cudaStreamSynchronize(stream_out));
 
   time_data.push_back(std::chrono::system_clock::now() - ts);
   std::cout << "Size: " << bytes_to_human_readable(sizeBytes)
             << " Time: " << time_data.back().count() / 1000 << "μs"
-            << " BW (each direction): "
+            << " BW (Dev to Host): "
             << ((double)sizeBytes * 1024) / time_data.back().count() << " MB/s"
             << std::endl;
 
-  free(in_host);
   free(out_host);
-  cudaFree(in_dev);
   cudaFree(out_dev);
 }
 
@@ -71,32 +64,25 @@ void runPciePinned(int size, std::vector<std::chrono::nanoseconds> &time_data,
                    cudaStream_t stream_in, cudaStream_t stream_out) {
   long sizeBytes = size * sizeof(float);
 
-  float *in_host, *out_host;
-  CUDA_CHECK(cudaMallocHost((void **)&in_host, sizeBytes));
+  float *out_host;
   CUDA_CHECK(cudaMallocHost((void **)&out_host, sizeBytes));
-  float *in_dev, *out_dev;
-  CUDA_CHECK(cudaMalloc((void **)&in_dev, sizeBytes));
+  float *out_dev;
   CUDA_CHECK(cudaMalloc((void **)&out_dev, sizeBytes));
 
   auto ts = std::chrono::system_clock::now();
 
-  CUDA_CHECK(cudaMemcpyAsync((void **)in_dev, in_host, sizeBytes,
-                             cudaMemcpyHostToDevice, stream_in));
   CUDA_CHECK(cudaMemcpyAsync((void **)out_host, out_dev, sizeBytes,
                              cudaMemcpyDeviceToHost, stream_out));
-  CUDA_CHECK(cudaStreamSynchronize(stream_in));
   CUDA_CHECK(cudaStreamSynchronize(stream_out));
 
   time_data.push_back(std::chrono::system_clock::now() - ts);
   std::cout << "Size: " << bytes_to_human_readable(sizeBytes)
             << " Time: " << time_data.back().count() / 1000 << "μs"
-            << " BW (each direction): "
+            << " BW (Dev to Host): "
             << ((double)sizeBytes * 1024) / time_data.back().count() << " MB/s"
             << std::endl;
 
-  cudaFreeHost(in_host);
   cudaFreeHost(out_host);
-  cudaFree(in_dev);
   cudaFree(out_dev);
 }
 
@@ -105,34 +91,26 @@ void runPciePinnedWriteCombined(
     cudaStream_t stream_in, cudaStream_t stream_out) {
   long sizeBytes = size * sizeof(float);
 
-  float *in_host, *out_host;
-  CUDA_CHECK(
-      cudaMallocHost((void **)&in_host, sizeBytes, cudaHostAllocWriteCombined));
+  float *out_host;
   CUDA_CHECK(cudaMallocHost((void **)&out_host, sizeBytes,
                             cudaHostAllocWriteCombined));
-  float *in_dev, *out_dev;
-  CUDA_CHECK(cudaMalloc((void **)&in_dev, sizeBytes));
+  float *out_dev;
   CUDA_CHECK(cudaMalloc((void **)&out_dev, sizeBytes));
 
   auto ts = std::chrono::system_clock::now();
 
-  CUDA_CHECK(cudaMemcpyAsync((void **)in_dev, in_host, sizeBytes,
-                             cudaMemcpyHostToDevice, stream_in));
   CUDA_CHECK(cudaMemcpyAsync((void **)out_host, out_dev, sizeBytes,
                              cudaMemcpyDeviceToHost, stream_out));
-  CUDA_CHECK(cudaStreamSynchronize(stream_in));
   CUDA_CHECK(cudaStreamSynchronize(stream_out));
 
   time_data.push_back(std::chrono::system_clock::now() - ts);
   std::cout << "Size: " << bytes_to_human_readable(sizeBytes)
             << " Time: " << time_data.back().count() / 1000 << "μs"
-            << " BW (each direction): "
+            << " BW (Dev to Host): "
             << ((double)sizeBytes * 1024) / time_data.back().count() << " MB/s"
             << std::endl;
 
-  cudaFreeHost(in_host);
   cudaFreeHost(out_host);
-  cudaFree(in_dev);
   cudaFree(out_dev);
 }
 
