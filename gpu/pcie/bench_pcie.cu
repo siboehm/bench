@@ -29,7 +29,7 @@ std::string bytes_to_human_readable(size_t size) {
   }
 
   std::stringstream ss;
-  ss.precision(2);
+  ss.precision(1);
   ss << std::fixed << size_d << sizes[order];
 
   return ss.str();
@@ -57,7 +57,7 @@ void runPcieNormal(int size, std::vector<std::chrono::nanoseconds> &time_data,
   time_data.push_back(std::chrono::system_clock::now() - ts);
   std::cout << "Size: " << bytes_to_human_readable(sizeBytes)
             << " Time: " << time_data.back().count() / 1000 << "μs"
-            << " Effective BW: "
+            << " BW (each direction): "
             << ((double)sizeBytes * 1024) / time_data.back().count() << " MB/s"
             << std::endl;
 
@@ -90,7 +90,7 @@ void runPciePinned(int size, std::vector<std::chrono::nanoseconds> &time_data,
   time_data.push_back(std::chrono::system_clock::now() - ts);
   std::cout << "Size: " << bytes_to_human_readable(sizeBytes)
             << " Time: " << time_data.back().count() / 1000 << "μs"
-            << " Effective BW: "
+            << " BW (each direction): "
             << ((double)sizeBytes * 1024) / time_data.back().count() << " MB/s"
             << std::endl;
 
@@ -126,7 +126,7 @@ void runPciePinnedWriteCombined(
   time_data.push_back(std::chrono::system_clock::now() - ts);
   std::cout << "Size: " << bytes_to_human_readable(sizeBytes)
             << " Time: " << time_data.back().count() / 1000 << "μs"
-            << " Effective BW: "
+            << " BW (each direction): "
             << ((double)sizeBytes * 1024) / time_data.back().count() << " MB/s"
             << std::endl;
 
