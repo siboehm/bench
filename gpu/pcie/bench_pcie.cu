@@ -36,7 +36,8 @@ std::string bytes_to_human_readable(size_t size) {
 }
 
 void runPcieDefault(int size, std::vector<std::chrono::nanoseconds> &time_data,
-                    cudaStream_t stream_in, cudaStream_t stream_out) {
+                    cudaStream_t stream_in, cudaStream_t stream_out,
+                    bool verbose = true) {
   int sizeBytes = size * sizeof(float);
 
   float *in_host, *out_host;
@@ -56,11 +57,13 @@ void runPcieDefault(int size, std::vector<std::chrono::nanoseconds> &time_data,
   CUDA_CHECK(cudaStreamSynchronize(stream_out));
 
   time_data.push_back(std::chrono::system_clock::now() - ts);
-  std::cout << "Size: " << bytes_to_human_readable(sizeBytes)
-            << " Time: " << time_data.back().count() / 1000 << "μs"
-            << " BW (Dev to Host): "
-            << ((double)sizeBytes * 1024) / time_data.back().count() << " MB/s"
-            << std::endl;
+  if (verbose) {
+    std::cout << "Size: " << bytes_to_human_readable(sizeBytes)
+              << " Time: " << time_data.back().count() / 1000 << "μs"
+              << " BW (Dev to Host): "
+              << ((double)sizeBytes * 1024) / time_data.back().count()
+              << " MB/s" << std::endl;
+  }
 
   free(out_host);
   cudaFree(out_dev);
@@ -144,6 +147,8 @@ void storeTimingsToFile(const std::vector<std::chrono::nanoseconds> &time_data,
   file.close();
 }
 
+const size_t WARMUP = 2 << 14;
+
 int main() {
   int deviceId;
   cudaGetDevice(&deviceId);
@@ -151,6 +156,7 @@ int main() {
   cudaGetDeviceProperties(&props, deviceId);
   std::cout << "Device: " << props.name << "\n";
 
+  std::vector<std::chrono::nanoseconds> warmup_data;
   std::vector<std::chrono::nanoseconds> time_data;
 
   std::vector<size_t> SIZES = {
@@ -165,6 +171,8 @@ int main() {
 
   std::cout << "------- Running PCIe Normal ------"
             << "\n\n";
+  // warmup
+  runPcieDefault(WARMUP, warmup_data, stream_in, stream_out, false);
   for (auto size : SIZES) {
     runPcieDefault(size, time_data, stream_in, stream_out);
   }
@@ -176,6 +184,8 @@ int main() {
 
   std::cout << "\n----- Running PCIe Pinned ------"
             << "\n\n";
+  // warmup
+  runPcieDefault(WARMUP, warmup_data, stream_in, stream_out, false);
   for (auto size : SIZES) {
     runPciePinned(size, time_data, stream_in, stream_out);
   }
@@ -186,6 +196,8 @@ int main() {
 
   std::cout << "\n----- Running PCIe Pinned Write Combined ------"
             << "\n\n";
+  // warmup
+  runPcieDefault(WARMUP, warmup_data, stream_in, stream_out, false);
   for (auto size : SIZES) {
     runPciePinnedWriteCombined(size, time_data, stream_in, stream_out);
   }
