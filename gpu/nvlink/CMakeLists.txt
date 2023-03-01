@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.19)
-project(PCIE_BENCH LANGUAGES CXX CUDA)
+project(NVLINK_BENCH LANGUAGES CXX CUDA)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 find_package(CUDA REQUIRED)
@@ -9,7 +9,7 @@ include(CheckLanguage)
 check_language(CUDA)
 
 set(CMAKE_CXX_STANDARD 20)
-set(CUDA_COMPUTE_CAPABILITY 80)
+set(CUDA_COMPUTE_CAPABILITY 86)
 
 # in debug mode, add debug symbols to device code
 # this disables most optimizations and kills performance
@@ -20,6 +20,6 @@ add_compile_options("$<$<AND:$<CONFIG:Debug>,$<COMPILE_LANGUAGE:CUDA>>:-G;-src-i
 include_directories(${CUDA_INCLUDE_DIRS})
 
 # generate executable
-add_executable(bench_pcie bench_pcie.cu)
-set_target_properties(bench_pcie PROPERTIES CUDA_ARCHITECTURES ${CUDA_COMPUTE_CAPABILITY})
-target_link_libraries(bench_pcie ${CUDA_LIBRARIES} ${CUDA_CUBLAS_LIBRARIES})
+add_executable(bench_nvlink bench_nvlink.cu)
+set_target_properties(bench_nvlink PROPERTIES CUDA_ARCHITECTURES ${CUDA_COMPUTE_CAPABILITY})
+target_link_libraries(bench_nvlink ${CUDA_LIBRARIES} ${CUDA_CUBLAS_LIBRARIES})
