@@ -57,14 +57,15 @@ https://github.com/stas00/toolbox/blob/master/pytorch/all_reduce_bench.py
 
 ## LLMs
 
-| Metric                                  | Value           |
-|-----------------------------------------|-----------------|
-| Latency (ChatGPT-esque system)          | 500 to 1000 WPM |
-| OpenAI API cost per 1K tokens (~1 page) | 1ct             |
-| Tokens per word                         | 1               |
+| Metric                                  | Value                    |
+|-----------------------------------------|--------------------------|
+| Latency (ChatGPT-esque system)          | 500 to 1000 WPM          |
+| OpenAI API cost per 1K tokens (~1 page) | 0,01 $ [^openaiPrincing] |
+| Tokens per word                         | 1                        |
 
 
 [^awsP4]: https://aws.amazon.com/ec2/instance-types/p4/
 [^rtx3090perf]: https://en.wikipedia.org/wiki/GeForce_30_series
 [^consumerGpuCloud]: https://www.nvidia.com/en-us/drivers/geforce-license/
     > No Datacenter Deployment. The SOFTWARE is not licensed for datacenter deployment, except that blockchain processing in a datacenter is permitted.
+[^openaiPricing]: https://openai.com/pricing
