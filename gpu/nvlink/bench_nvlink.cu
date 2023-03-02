@@ -68,6 +68,12 @@ void checkTransfer(float *d0_data0, float *d0_data1, float *d1_data0,
                    float *d1_data1, cudaStream_t d0_stream,
                    cudaStream_t d1_stream) {
 
+  int canAccessPeer;
+  CHECK(cudaDeviceCanAccessPeer(&canAccessPeer, DEVICE_B, DEVICE_A))
+  if (!canAccessPeer) {
+    throw std::runtime_error("Peer access not available");
+  }
+
   // ensure pointers are on the correct device
   cudaPointerAttributes d0_data0_attr;
   cudaPointerAttributes d0_data1_attr;

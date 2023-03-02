@@ -1,3 +1,4 @@
+#include <cassert>
 #include <chrono>
 #include <cuda_runtime.h>
 #include <fstream>
@@ -155,6 +156,10 @@ int main() {
   cudaDeviceProp props{};
   cudaGetDeviceProperties(&props, deviceId);
   std::cout << "Device: " << props.name << "\n";
+  if (props.asyncEngineCount < 2) {
+    std::cout << "No duplex Pcie" << std::endl;
+    return 0;
+  }
 
   std::vector<std::chrono::nanoseconds> warmup_data;
   std::vector<std::chrono::nanoseconds> time_data;
