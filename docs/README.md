@@ -40,11 +40,13 @@ https://github.com/stas00/toolbox/blob/master/pytorch/all_reduce_bench.py
 
 ### Interconnect
 
-| Device                 | Fabric         | Latency | Throughput (per direction) | 1MB  | 1GB  | Example GPUs |
-|------------------------|----------------|---------|----------------------------|------|------|--------------|
-| GPU to CPU             | 16x PCIe 4.0   | 10 μs   | 20 GB/s                    | 75μs | 50ms | A100, A6000  |
-| GPU to GPU (same node) | 4x NVLink 3.0  | 10 μs   | 50 GB/s                    | 25μs | 20ms | A6000        |
-| GPU to GPU (same node) | 12x NVLink 3.0 | 10 μs   | 300 GB/s                   | 25μs | 5ms  | A100         |
+| Device                      | Fabric            | Latency | Bandwidth per direction | 1MB  | 1GB  | Example GPUs |
+|-----------------------------|-------------------|---------|-------------------------|------|------|--------------|
+| GPU to CPU                  | 16x PCIe 4.0      | 10 μs   | 20 GB/s                 | 75μs | 50ms | A100, A6000  |
+| GPU to GPU (same node)      | 4x NVLink 3.0     | 10 μs   | 50 GB/s                 | 25μs | 20ms | A6000        |
+| GPU to GPU (same node)      | 12x NVLink 3.0    | 10 μs   | 300 GB/s                | 25μs | 5ms  | A100         |
+| GPU to GPU (different node) | Infiniband        | ?       | ?                       | ?    | ?    |              |
+| GPU to GPU (different node) | TCP over Ethernet | ?       | ?                       | ?    | ?    |              |
 
 ## Costs:
 
@@ -65,4 +67,4 @@ https://github.com/stas00/toolbox/blob/master/pytorch/all_reduce_bench.py
 [^awsP4]: https://aws.amazon.com/ec2/instance-types/p4/
 [^rtx3090perf]: https://en.wikipedia.org/wiki/GeForce_30_series
 [^consumerGpuCloud]: https://www.nvidia.com/en-us/drivers/geforce-license/
-> No Datacenter Deployment. The SOFTWARE is not licensed for datacenter deployment, except that blockchain processing in a datacenter is permitted.
+    > No Datacenter Deployment. The SOFTWARE is not licensed for datacenter deployment, except that blockchain processing in a datacenter is permitted.
