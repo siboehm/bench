@@ -49,12 +49,14 @@ https://github.com/stas00/toolbox/blob/master/pytorch/all_reduce_bench.py
 
 ## Costs:
 
-| Device   | Properties                                                                                     | Cost/h (Spot instance) | Cost (purchase) |
-|----------|------------------------------------------------------------------------------------------------|------------------------|-----------------|
-| A100     | 80GB GMEM, 300 TFLOPs bfloat16                                                                 | 3$                     | 10.000$         |
-| RTX 3090 | 24GB GMEM, 150 TFLOPs bfloat16 [^rtx3090perf](https://en.wikipedia.org/wiki/GeForce_30_series) | not allowed in cloud   | 1000$           |
+| Device   | Properties                                    | Cost/h (Spot instance) | Cost (purchase) |
+|----------|-----------------------------------------------|------------------------|-----------------|
+| A100     | 80GB GMEM, 300 TFLOPs bfloat16                | 3$                     | 10.000$         |
+| RTX 3090 | 24GB GMEM, 150 TFLOPs bfloat16 [^rtx3090perf] | not allowed in cloud   | 1000$           |
 
 ## LLMs:
 | Metric                         | Value          |
 |--------------------------------|----------------|
 | Latency (ChatGPT-esque system) | 500 - 1000 WPM |
+
+[^rtx3090perf]: (https://en.wikipedia.org/wiki/GeForce_30_series)
