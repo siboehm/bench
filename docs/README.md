@@ -33,10 +33,10 @@ https://github.com/stas00/toolbox/blob/master/pytorch/all_reduce_bench.py
 
 ### Memory
 
-| Device               | Latency | Throughput (per direction) | 1MB | 1GB | Example GPUs | Source |
-|----------------------|---------|----------------------------|-----|-----|--------------|--------|
-| GPU GMEM to Register |         | 700 GB/s                   |     |     | A6000        |        |
-| GPU GMEM to Register |         | 2 TB/s                     |     |     | A100 SXM     |        |
+| Device               | Latency | Throughput (per direction) | 1MB | 1GB | Example GPUs |
+|----------------------|---------|----------------------------|-----|-----|--------------|
+| GPU GMEM to Register |         | 700 GB/s                   |     |     | A6000        |
+| GPU GMEM to Register |         | 2 TB/s                     |     |     | A100 SXM     |
 
 ### Interconnect
 
@@ -57,11 +57,11 @@ https://github.com/stas00/toolbox/blob/master/pytorch/all_reduce_bench.py
 
 ## LLMs
 
-| Metric                                  | Value                    |
-|-----------------------------------------|--------------------------|
-| Latency (ChatGPT-esque system)          | 500 to 1000 WPM          |
-| OpenAI API cost per 1K tokens (~1 page) | 0,01 $ [^openaiPrincing] |
-| Tokens per word                         | 1                        |
+| Metric                                  | Value                   |
+|-----------------------------------------|-------------------------|
+| Latency (ChatGPT-esque system)          | 500 to 1000 WPM         |
+| OpenAI API cost per 1K tokens (~1 page) | 0,01 $ [^openaiPricing] |
+| Tokens per word                         | 1                       |
 
 
 [^awsP4]: https://aws.amazon.com/ec2/instance-types/p4/
