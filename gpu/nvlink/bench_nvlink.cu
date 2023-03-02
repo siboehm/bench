@@ -54,7 +54,7 @@ void storeTimingsToFile(const std::vector<std::chrono::nanoseconds> &timeData,
 }
 
 const size_t WARMUP_STEPS = 2;
-const size_t WARMUP_SIZE = 32; // 134 MB
+const size_t WARMUP_SIZE = 32 * 1024 * 1024; // 134 MB
 
 const std::vector<size_t> SIZES = {
     8,        16,       32,       64,        128,      256,     512,
@@ -182,16 +182,16 @@ int main() {
               << " MB/s\n";
   }
 
-  storeTimingsToFile(timeData, SIZES, "cudaMemcpyPeerAsync.csv");
+  storeTimingsToFile(timeData, SIZES, "build/cudaMemcpyPeerAsync.csv");
 
   CHECK(cudaGetLastError());
 
-  // clean up
-  // why can I free the memory without doing a cudaSetDevice(0) first?
   cudaFree(d0_data0);
   cudaFree(d0_data1);
   cudaFree(d1_data0);
   cudaFree(d1_data1);
+  cudaStreamDestroy(d0_stream);
+  cudaStreamDestroy(d1_stream);
 
   return 0;
 }

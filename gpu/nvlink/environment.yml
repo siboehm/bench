@@ -1,0 +1,7 @@
+channels:
+  - conda-forge
+dependencies:
+  - python
+  - python-kaleido
+  - plotly
+  - pandas
