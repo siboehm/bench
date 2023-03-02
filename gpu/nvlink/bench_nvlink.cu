@@ -109,12 +109,10 @@ void checkTransfer(float *d0_data0, float *d0_data1, float *d1_data0,
   CHECK(cudaSetDevice(DEVICE_A));
   CHECK(cudaMemcpy(hdst_d0.data(), d0_data1, WARMUP_SIZE * sizeof(float),
                    cudaMemcpyDeviceToHost));
-  CHECK(cudaDeviceSynchronize());
 
   CHECK(cudaSetDevice(DEVICE_B));
   CHECK(cudaMemcpy(hdst_d1.data(), d1_data1, WARMUP_SIZE * sizeof(float),
                    cudaMemcpyDeviceToHost));
-  CHECK(cudaDeviceSynchronize());
 
   for (int i = 0; i < WARMUP_SIZE; i++) {
     if (hdst_d1[i] != hsrc_d0[i]) {
