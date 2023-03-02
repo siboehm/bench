@@ -55,6 +55,8 @@ void storeTimingsToFile(const std::vector<std::chrono::nanoseconds> &timeData,
 
 const size_t WARMUP_STEPS = 2;
 const size_t WARMUP_SIZE = 32 * 1024 * 1024; // 134 MB
+const int DEVICE_A = 0;
+const int DEVICE_B = 1;
 
 const std::vector<size_t> SIZES = {
     8,        16,       32,       64,        128,      256,     512,
@@ -77,8 +79,8 @@ void checkTransfer(float *d0_data0, float *d0_data1, float *d1_data0,
   CHECK(cudaPointerGetAttributes(&d1_data0_attr, d1_data0));
   CHECK(cudaPointerGetAttributes(&d1_data1_attr, d1_data1));
 
-  if (d0_data0_attr.device != 0 || d0_data1_attr.device != 0 ||
-      d1_data0_attr.device != 1 || d1_data1_attr.device != 1) {
+  if (d0_data0_attr.device != DEVICE_A || d0_data1_attr.device != DEVICE_A ||
+      d1_data0_attr.device != DEVICE_B || d1_data1_attr.device != DEVICE_B) {
     throw std::runtime_error("Incorrect device for pointer");
   }
 
@@ -97,20 +99,22 @@ void checkTransfer(float *d0_data0, float *d0_data1, float *d1_data0,
   CHECK(cudaMemcpy(d1_data0, hsrc_d1.data(), WARMUP_SIZE * sizeof(float),
                    cudaMemcpyDefault));
 
-  CHECK(cudaMemcpyPeerAsync(d1_data1, 1, d0_data0, 0,
+  CHECK(cudaMemcpyPeerAsync(d1_data1, DEVICE_B, d0_data0, DEVICE_A,
                             WARMUP_SIZE * sizeof(float), d0_stream));
-  CHECK(cudaMemcpyPeerAsync(d0_data1, 0, d1_data0, 1,
+  CHECK(cudaMemcpyPeerAsync(d0_data1, DEVICE_A, d1_data0, DEVICE_B,
                             WARMUP_SIZE * sizeof(float), d1_stream));
   CHECK(cudaStreamSynchronize(d0_stream));
   CHECK(cudaStreamSynchronize(d1_stream));
 
-  CHECK(cudaSetDevice(0));
+  CHECK(cudaSetDevice(DEVICE_A));
   CHECK(cudaMemcpy(hdst_d0.data(), d0_data1, WARMUP_SIZE * sizeof(float),
                    cudaMemcpyDeviceToHost));
+  CHECK(cudaDeviceSynchronize());
 
-  CHECK(cudaSetDevice(1));
+  CHECK(cudaSetDevice(DEVICE_B));
   CHECK(cudaMemcpy(hdst_d1.data(), d1_data1, WARMUP_SIZE * sizeof(float),
                    cudaMemcpyDeviceToHost));
+  CHECK(cudaDeviceSynchronize());
 
   for (int i = 0; i < WARMUP_SIZE; i++) {
     if (hdst_d1[i] != hsrc_d0[i]) {
@@ -137,30 +141,31 @@ int main() {
     return 1;
   }
 
-  CHECK(cudaSetDevice(0));
+  CHECK(cudaSetDevice(DEVICE_A));
   cudaStream_t d0_stream;
   cudaStreamCreate(&d0_stream);
   float *d0_data0, *d0_data1;
   CHECK(cudaMalloc(&d0_data0, SIZES.back() * sizeof(float)));
   CHECK(cudaMalloc(&d0_data1, SIZES.back() * sizeof(float)));
-  CHECK(cudaDeviceEnablePeerAccess(1, 0)); // needs to be called on both devices
+  CHECK(cudaDeviceEnablePeerAccess(DEVICE_B,
+                                   0)); // needs to be called on both devices
 
-  CHECK(cudaSetDevice(1));
+  CHECK(cudaSetDevice(DEVICE_B));
   cudaStream_t d1_stream;
   cudaStreamCreate(&d1_stream);
   float *d1_data0, *d1_data1;
   CHECK(cudaMalloc(&d1_data0, SIZES.back() * sizeof(float)));
   CHECK(cudaMalloc(&d1_data1, SIZES.back() * sizeof(float)));
-  CHECK(cudaDeviceEnablePeerAccess(0, 0));
+  CHECK(cudaDeviceEnablePeerAccess(DEVICE_A, 0));
 
   checkTransfer(d0_data0, d0_data1, d1_data0, d1_data1, d0_stream, d1_stream);
 
   std::vector<std::chrono::nanoseconds> timeData;
 
   for (int i = 0; i < WARMUP_STEPS; i++) {
-    CHECK(cudaMemcpyPeerAsync(d1_data1, 1, d0_data0, 0,
+    CHECK(cudaMemcpyPeerAsync(d1_data1, DEVICE_B, d0_data0, DEVICE_A,
                               WARMUP_SIZE * sizeof(float), d0_stream));
-    CHECK(cudaMemcpyPeerAsync(d0_data0, 0, d1_data1, 1,
+    CHECK(cudaMemcpyPeerAsync(d0_data0, DEVICE_A, d1_data1, DEVICE_B,
                               WARMUP_SIZE * sizeof(float), d1_stream));
   }
   CHECK(cudaStreamSynchronize(d0_stream));
@@ -169,8 +174,10 @@ int main() {
   for (auto size : SIZES) {
     size_t sizeBytes = size * sizeof(float);
     auto ts = std::chrono::system_clock::now();
-    CHECK(cudaMemcpyPeerAsync(d1_data1, 1, d0_data0, 0, sizeBytes, d0_stream));
-    CHECK(cudaMemcpyPeerAsync(d0_data1, 0, d1_data0, 1, sizeBytes, d1_stream));
+    CHECK(cudaMemcpyPeerAsync(d1_data1, DEVICE_B, d0_data0, DEVICE_A, sizeBytes,
+                              d0_stream));
+    CHECK(cudaMemcpyPeerAsync(d0_data1, DEVICE_A, d1_data0, DEVICE_B, sizeBytes,
+                              d1_stream));
     CHECK(cudaStreamSynchronize(d0_stream));
     CHECK(cudaStreamSynchronize(d1_stream));
     timeData.push_back(std::chrono::system_clock::now() - ts);
