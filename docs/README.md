@@ -71,4 +71,5 @@ https://github.com/stas00/toolbox/blob/master/pytorch/all_reduce_bench.py
 [^rtx3090perf]: https://en.wikipedia.org/wiki/GeForce_30_series
 [^consumerGpuCloud]: https://www.nvidia.com/en-us/drivers/geforce-license/
     > No Datacenter Deployment. The SOFTWARE is not licensed for datacenter deployment, except that blockchain processing in a datacenter is permitted.
+
 [^openaiPricing]: https://openai.com/pricing
