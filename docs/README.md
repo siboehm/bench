@@ -21,7 +21,7 @@ https://github.com/stas00/toolbox/blob/master/pytorch/all_reduce_bench.py
 
 # GPU latency numbers that a very small number of people might profit from being able to look up quickly
 
-## Latencies
+## Compute
 
 | What               | Latency |
 |--------------------|---------|
@@ -29,7 +29,7 @@ https://github.com/stas00/toolbox/blob/master/pytorch/all_reduce_bench.py
 | CUDA kernel launch | 3μs     |
 
 
-## Bandwidths:
+## Data movement
 
 ### Memory
 
@@ -50,7 +50,7 @@ https://github.com/stas00/toolbox/blob/master/pytorch/all_reduce_bench.py
 | GPU to GPU (different node) | Infiniband        | ?       | ?                       | ?    | ?    |              |
 | GPU to GPU (different node) | TCP over Ethernet | ?       | ?                       | ?    | ?    |              |
 
-## Costs:
+## Cost
 
 | Device   | Properties                                    | Cost/h (Spot instance)          | Cost (purchase) |
 |----------|-----------------------------------------------|---------------------------------|-----------------|
