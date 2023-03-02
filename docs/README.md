@@ -11,7 +11,6 @@ https://github.com/stas00/toolbox/blob/master/pytorch/all_reduce_bench.py
 - Look at Lennart's posts again -> How does he estimate the costs?
 - AI and compute -> How did they count the flops?
 - kernel launch latency
-- PCIe bandwidth & NVLink bandwidth
 - Can matmul kernels just be approximated with max FLOPs counts?
 - Memory demand for training:
     - parameters 
@@ -49,14 +48,21 @@ https://github.com/stas00/toolbox/blob/master/pytorch/all_reduce_bench.py
 
 ## Costs:
 
-| Device   | Properties                                    | Cost/h (Spot instance) | Cost (purchase) |
-|----------|-----------------------------------------------|------------------------|-----------------|
-| A100     | 80GB GMEM, 300 TFLOPs bfloat16                | 3$                     | 10.000$         |
-| RTX 3090 | 24GB GMEM, 150 TFLOPs bfloat16 [^rtx3090perf] | not allowed in cloud   | 1000$           |
+| Device   | Properties                                    | Cost/h (Spot instance)          | Cost (purchase) |
+|----------|-----------------------------------------------|---------------------------------|-----------------|
+| A100     | 80GB GMEM, 300 TFLOPs bfloat16                | 5$ [^awsP4]                     | 10.000$         |
+| RTX 3090 | 24GB GMEM, 150 TFLOPs bfloat16 [^rtx3090perf] | not allowed [^consumerGpuCloud] | 1000$           |
 
-## LLMs:
-| Metric                         | Value          |
-|--------------------------------|----------------|
-| Latency (ChatGPT-esque system) | 500 - 1000 WPM |
+## LLMs
 
-[^rtx3090perf]: (https://en.wikipedia.org/wiki/GeForce_30_series)
+| Metric                                  | Value           |
+|-----------------------------------------|-----------------|
+| Latency (ChatGPT-esque system)          | 500 to 1000 WPM |
+| OpenAI API cost per 1K tokens (~1 page) | 1ct             |
+| Tokens per word                         | 1               |
+
+
+[^awsP4]: https://aws.amazon.com/ec2/instance-types/p4/
+[^rtx3090perf]: https://en.wikipedia.org/wiki/GeForce_30_series
+[^consumerGpuCloud]: https://www.nvidia.com/en-us/drivers/geforce-license/
+> No Datacenter Deployment. The SOFTWARE is not licensed for datacenter deployment, except that blockchain processing in a datacenter is permitted.
