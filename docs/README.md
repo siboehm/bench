@@ -33,10 +33,11 @@ https://github.com/stas00/toolbox/blob/master/pytorch/all_reduce_bench.py
 
 ### Memory
 
-| Device               | Latency | Throughput (per direction) | 1MB | 1GB | Example GPUs |
-|----------------------|---------|----------------------------|-----|-----|--------------|
-| GPU GMEM to Register |         | 700 GB/s                   |     |     | A6000        |
-| GPU GMEM to Register |         | 2 TB/s                     |     |     | A100 SXM     |
+| Device               | Latency | Throughput for sequential access | 1MB  | 1GB  | Example device  |
+|----------------------|---------|----------------------------------|------|------|-----------------|
+| CPU RAM to Register  |         | 35 GB/s [^sirupsenNapkin]        | 30μs | 30ms |                 |
+| GPU GMEM to Register |         | 700 GB/s                         |      |      | A6000, RTX 3090 |
+| GPU GMEM to Register |         | 2 TB/s                           |      |      | A100 SXM        |
 
 ### Interconnect
 
@@ -45,6 +46,7 @@ https://github.com/stas00/toolbox/blob/master/pytorch/all_reduce_bench.py
 | GPU to CPU                  | 16x PCIe 4.0      | 10 μs   | 20 GB/s                 | 75μs | 50ms | A100, A6000  |
 | GPU to GPU (same node)      | 4x NVLink 3.0     | 10 μs   | 50 GB/s                 | 25μs | 20ms | A6000        |
 | GPU to GPU (same node)      | 12x NVLink 3.0    | 10 μs   | 300 GB/s                | 25μs | 5ms  | A100         |
+| GPU to GPU (same node)      | 12x NVLink 4.0    | 10 μs   | 450 GB/s                | 25μs | 2ms  | H100         |
 | GPU to GPU (different node) | Infiniband        | ?       | ?                       | ?    | ?    |              |
 | GPU to GPU (different node) | TCP over Ethernet | ?       | ?                       | ?    | ?    |              |
 
@@ -64,6 +66,7 @@ https://github.com/stas00/toolbox/blob/master/pytorch/all_reduce_bench.py
 | Tokens per word                         | 1                       |
 
 
+[^sirupsenNapkin]: https://github.com/sirupsen/napkin-math
 [^awsP4]: https://aws.amazon.com/ec2/instance-types/p4/
 [^rtx3090perf]: https://en.wikipedia.org/wiki/GeForce_30_series
 [^consumerGpuCloud]: https://www.nvidia.com/en-us/drivers/geforce-license/
