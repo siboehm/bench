@@ -52,10 +52,10 @@ https://github.com/stas00/toolbox/blob/master/pytorch/all_reduce_bench.py
 
 ## Cost
 
-| Device   | Properties                                    | Cost/h (Spot instance)          | Cost (purchase) |
-|----------|-----------------------------------------------|---------------------------------|-----------------|
-| A100     | 80GB GMEM, 300 TFLOPs bfloat16                | 5$ [^awsP4]                     | 10.000$         |
-| RTX 3090 | 24GB GMEM, 150 TFLOPs bfloat16 [^rtx3090perf] | not allowed [^consumerGpuCloud] | 1000$           |
+| Device   | Properties                                   | Cost/h (Spot instance)          | Cost (purchase) |
+|----------|----------------------------------------------|---------------------------------|-----------------|
+| A100     | 80GB GMEM, 300 TFLOPs bfloat16               | 5$ [^awsP4]                     | 10.000$         |
+| RTX 3090 | 24GB GMEM, 71 TFLOPs bfloat16 [^rtx3090perf] | not allowed [^consumerGpuCloud] | 1000$           |
 
 ## LLMs
 
