@@ -51,6 +51,11 @@ https://github.com/stas00/toolbox/blob/master/pytorch/all_reduce_bench.py
 | GPU to GPU (remote node) | TCP over 100 GBit Ethernet | ?       | 10 GB/s [^100GbMellanox] | 100μs (?) | 100ms |              |
 | GPU to GPU (remote node) | GPUDirect RDMA             | ?       | ?                        | ?         | ?     |              |
 
+### MPI
+| Operation | Latency (8B) | Latency (theoretical) | Bandwidth (theoretical) |
+| -- | -- | -- | -- |
+| AllReduce (NCCL) | 200μs[^NCCL24] | log #Nodes[^marekAllReduce] | 2 * ModelSizes[^marekAllReduce] |
+
 ## Cost
 
 | Device   | Properties                                   | Cost/h (Spot instance)          | Cost (purchase) |
@@ -84,6 +89,8 @@ https://github.com/stas00/toolbox/blob/master/pytorch/all_reduce_bench.py
 
 [^openaiPricing]: [https://openai.com/pricing](https://openai.com/pricing) 
 [^100GbMellanox]: [https://www.microway.com/knowledge-center-articles/performance-characteristics-of-common-network-fabrics/](https://www.microway.com/knowledge-center-articles/performance-characteristics-of-common-network-fabrics/)
+[^NCCL24]: [https://developer.nvidia.com/blog/massively-scale-deep-learning-training-nccl-2-4/](https://developer.nvidia.com/blog/massively-scale-deep-learning-training-nccl-2-4/)
+[^marekAllReduce]: [https://marek.ai/allreduce-the-basis-of-multi-device-communication-for-neural-network-training.html](https://marek.ai/allreduce-the-basis-of-multi-device-communication-for-neural-network-training.html)
 
 ## Further info
 - For benchmarking networking: [netperf](https://github.com/HewlettPackard/netperf) and [sockperf](https://github.com/Mellanox/sockperf)
