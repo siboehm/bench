@@ -64,12 +64,12 @@ https://github.com/stas00/toolbox/blob/master/pytorch/all_reduce_bench.py
 | RTX 3090 | 24GB GMEM, 71 TFLOPs bfloat16 [^rtx3090perf] | not allowed [^consumerGpuCloud] | 1000$           |
 
 ## GPU Properties
-| Device   | #SMs |
-|----------|------|
-| H100     | 132  |
-| A100     | 108  |
-| A6000    | 84   |
-| RTX 3090 | 82   |
+| Device   | \#SMs |
+|----------|-------|
+| H100     | 132   |
+| A100     | 108   |
+| A6000    | 84    |
+| RTX 3090 | 82    |
 
 ## LLMs
 
