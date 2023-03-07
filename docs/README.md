@@ -79,6 +79,10 @@ https://github.com/stas00/toolbox/blob/master/pytorch/all_reduce_bench.py
 | OpenAI API cost per 1K tokens (~1 page) | 0,01 $ [^openaiPricing] |
 | Tokens per word                         | 1                       |
 
+## Further info
+- For benchmarking networking: [netperf](https://github.com/HewlettPackard/netperf) and [sockperf](https://github.com/Mellanox/sockperf)
+
+## References
 
 [^sirupsenNapkin]: [https://github.com/sirupsen/napkin-math](https://github.com/sirupsen/napkin-math)
 [^awsP4]: [https://aws.amazon.com/ec2/instance-types/p4/](https://aws.amazon.com/ec2/instance-types/p4/)
@@ -92,5 +96,3 @@ https://github.com/stas00/toolbox/blob/master/pytorch/all_reduce_bench.py
 [^NCCL24]: [https://developer.nvidia.com/blog/massively-scale-deep-learning-training-nccl-2-4/](https://developer.nvidia.com/blog/massively-scale-deep-learning-training-nccl-2-4/)
 [^marekAllReduce]: [https://marek.ai/allreduce-the-basis-of-multi-device-communication-for-neural-network-training.html](https://marek.ai/allreduce-the-basis-of-multi-device-communication-for-neural-network-training.html)
 
-## Further info
-- For benchmarking networking: [netperf](https://github.com/HewlettPackard/netperf) and [sockperf](https://github.com/Mellanox/sockperf)
