@@ -52,8 +52,8 @@ https://github.com/stas00/toolbox/blob/master/pytorch/all_reduce_bench.py
 | GPU to GPU (remote node) | GPUDirect RDMA             | ?       | ?                        | ?         | ?     |              |
 
 ### MPI
-| Operation | Latency (8B) | Latency (theoretical) | Bandwidth (theoretical) |
-| -- | -- | -- | -- |
+| Operation        | Latency (8B)   | Latency (theoretical)       | Bandwidth (theoretical)         |
+|------------------|----------------|-----------------------------|---------------------------------|
 | AllReduce (NCCL) | 200μs[^NCCL24] | log #Nodes[^marekAllReduce] | 2 * ModelSizes[^marekAllReduce] |
 
 ## Cost
