@@ -1,10 +1,26 @@
 #include <iostream>
 #include <mpi.h>
+#include <sstream>
 #include <vector>
+
+std::string bytes_to_human_readable(size_t size) {
+  static const char *sizes[] = {"B", "KB", "MB", "GB", "TB"};
+  int order = 0;
+  double size_d = (double)size;
+  while (size_d >= 1000 && order < 4) {
+    size_d /= 1000;
+    ++order;
+  }
+  std::stringstream ss;
+  ss.precision(1);
+  ss << std::fixed << size_d << sizes[order];
+
+  return ss.str();
+}
 
 int main(int argc, char *argv[]) {
   int rank, num_procs;
-  int num_iterations = 1000;
+  int num_iterations = 100;
   double start_time, end_time, elapsed_time;
 
   // Initialize MPI environment
@@ -13,7 +29,10 @@ int main(int argc, char *argv[]) {
   MPI_Comm_size(MPI_COMM_WORLD, &num_procs);
 
   if (rank == 0) {
-    std::cout << "Data Size (Bytes), Average AllReduce Latency (microseconds)"
+    std::cout << "Running AllReduce benchmark on " << num_procs << " processes"
+              << std::endl;
+    std::cout << "Data Size (Bytes), Data Size (human readable), Average "
+                 "AllReduce Latency (μs)"
               << std::endl;
   }
 
@@ -42,7 +61,8 @@ int main(int argc, char *argv[]) {
 
     // Output the latency in microseconds
     if (rank == 0) {
-      std::cout << data_size << ", " << elapsed_time * 1e6 << std::endl;
+      std::cout << data_size << ", " << bytes_to_human_readable(data_size)
+                << ", " << elapsed_time * 1e6 << std::endl;
     }
   }
 

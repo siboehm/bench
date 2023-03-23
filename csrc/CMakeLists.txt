@@ -14,6 +14,8 @@ endif()
 
 set(CMAKE_CXX_STANDARD 17)
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 find_package(benchmark REQUIRED)
 
 add_executable(bench_exp benchmark_exp.cpp)
