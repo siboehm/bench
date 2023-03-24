@@ -47,7 +47,7 @@ int main(int argc, char *argv[]) {
                   MAX_SIZE / sizeof(float), MPI_FLOAT, MPI_SUM, MPI_COMM_WORLD);
   }
 
-  for (int data_size = 1024; data_size <= MAX_SIZE; data_size *= 2) {
+  for (size_t data_size = 1024; data_size <= MAX_SIZE; data_size *= 2) {
     // Warm-up
     for (int i = 0; i < 10; ++i) {
       MPI_Allreduce(send_buffer.data(), recv_buffer.data(),

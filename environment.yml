@@ -13,6 +13,7 @@ dependencies:
   - jupytext
   - tensorboard
   - compilers
+  - clang-format
   - pip
   - pip:
     - torch_tb_profiler

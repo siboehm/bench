@@ -1,4 +1,3 @@
-#include <cassert>
 #include <chrono>
 #include <cuda_runtime.h>
 #include <fstream>
