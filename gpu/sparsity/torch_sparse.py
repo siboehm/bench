@@ -1,10 +1,11 @@
 # ---
 # jupyter:
 #   jupytext:
+#     formats: ipynb,py:percent
 #     text_representation:
 #       extension: .py
-#       format_name: light
-#       format_version: '1.5'
+#       format_name: percent
+#       format_version: '1.3'
 #       jupytext_version: 1.14.4
 #   kernelspec:
 #     display_name: bench
@@ -12,7 +13,7 @@
 #     name: python3
 # ---
 
-# +
+# %%
 import torch
 import pandas as pd
 from pathlib import Path
@@ -34,11 +35,11 @@ torch.random.manual_seed(0)
 
 print(torch.__version__)
 
-
-# +
+# %%
 DEVICE = "cuda"
 PROFILER_OUTDIR = Path("profiler_output")
 PATCH_SIZE = 16
+NUM_REPEATS = 1
 
 densify = lambda x: x.to_dense() if x.is_sparse else x
 cooify = lambda x: x.to_sparse_coo()
@@ -54,8 +55,7 @@ MATRIX_TYPES = [
     ("bsr", bsrify),
 ]
 
-
-# +
+# %%
 SIZES = [512, 1024, 2048, 4096, 8192, 16384]
 PERCENTAGES_NONZERO = [0.0001, 0.001, 0.01, 0.05, 0.1, 0.2, 0.3]
 
@@ -88,27 +88,34 @@ def run_benchmark(profiling=False):
 
             for name, matrix_fun in MATRIX_TYPES:
                 matrix = matrix_fun(A_dense)
-                start_time = time.time()
+                # warm up
+                _ = torch.matmul(matrix, b)
+                start_time = time.time_ns()
                 with profile(
                     activities=[ProfilerActivity.CPU, ProfilerActivity.CUDA],
                     with_stack=profiling,
                     record_shapes=profiling,
                 ) as prof:
-                    _ = torch.matmul(matrix, b)
+                    for _ in range(NUM_REPEATS):
+                        _ = torch.matmul(matrix, b)
                 torch.cuda.synchronize()
-                end_time = time.time()
-                print(f"  {name} took {end_time - start_time} seconds")
+                end_time = time.time_ns()
+                print(
+                    f"  {name} took {(end_time - start_time) / NUM_REPEATS / 10**6} ms"
+                )
                 result = {
                     "size": size,
                     "percentage_nonzero": percentage_nonzero,
                     "name": name,
                     "cuda_micros": prof.key_averages()
                     .total_average()
-                    .self_cuda_time_total,
+                    .self_cuda_time_total
+                    / NUM_REPEATS,
                     "cpu_micros": prof.key_averages()
                     .total_average()
-                    .self_cpu_time_total,
-                    "measured_time": end_time - start_time,
+                    .self_cpu_time_total
+                    / NUM_REPEATS,
+                    "measured_time": (end_time - start_time) / NUM_REPEATS,
                 }
                 results.append(result)
                 if profiling:
@@ -131,20 +138,20 @@ def run_benchmark(profiling=False):
 results = run_benchmark(profiling=False)
 df = pd.DataFrame(results)
 df.to_csv(PROFILER_OUTDIR / "torch_sparse_results.csv", index=False)
-# -
 
-
+# %%
 SIZES = [8192]
 PERCENTAGES_NONZERO = [0.05]
 _ = run_benchmark(profiling=True)
 
+# %%
 df = pd.read_csv(PROFILER_OUTDIR / "torch_sparse_results.csv")
 df["percentage_nonzero"] = df["percentage_nonzero"] * 100
 df["cuda_millis"] = df["cuda_micros"] / 1000
 df["cpu_millis"] = df["cpu_micros"] / 1000
 df
 
-# +
+# %%
 # Create the lineplots with log y-scale and dots
 g = sns.FacetGrid(
     df,
@@ -204,6 +211,5 @@ g.map(plt.grid, which="both", axis="both", ls="--", color="grey", alpha=0.5)
 # Show the plot
 plt.show()
 g.savefig("torch_sparse_plot_largest.png")
-# -
 
-
+# %%
