@@ -23,4 +23,7 @@ pushd csrc
 mkdir -p build
 pushd build && cmake .. && make
 ./bench_exp | tee -a "$resultfile"
-popd && popd
+popd
+printf '\n\nMPI BENCHMARK RESULTS\n\n' >> "$resultfile"
+./run_mpi_benchmark.sh | tee -a "$resultfile"
+popd
