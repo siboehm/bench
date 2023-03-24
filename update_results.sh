@@ -23,7 +23,7 @@ pushd csrc
 mkdir -p build
 pushd build && cmake .. && make
 ./bench_exp | tee -a "$resultfile"
-mpirun -np 2 --bind-to core ./mpi_benchmark | tee -a "$resultfile"
-mpirun -np 4 --bind-to core ./mpi_benchmark | tee -a "$resultfile"
-mpirun -np 8 --bind-to core ./mpi_benchmark | tee -a "$resultfile"
-popd && popd
+popd
+printf '\n\nMPI BENCHMARK RESULTS\n\n' >> "$resultfile"
+./run_mpi_benchmark.sh | tee -a "$resultfile"
+popd
