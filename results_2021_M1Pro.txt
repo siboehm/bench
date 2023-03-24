@@ -7,36 +7,36 @@ GOSRC BENCHMARK RESULTS
 goos: darwin
 goarch: arm64
 pkg: bench
-BenchmarkCoGoCall-10                     	22900744	        46.02 ns/op
-BenchmarkFunctionCallNoInline-10         	1000000000	         0.9318 ns/op
-BenchmarkFunctionCallInline-10           	1000000000	         0.6237 ns/op
-BenchmarkStructAccessSequential-10       	      48	  22643850 ns/op
-BenchmarkStructAccessNonSequential-10    	      51	  22690321 ns/op
+BenchmarkCoGoCall-10                     	27169914	        45.86 ns/op
+BenchmarkFunctionCallNoInline-10         	1000000000	         0.9339 ns/op
+BenchmarkFunctionCallInline-10           	1000000000	         0.6304 ns/op
+BenchmarkStructAccessSequential-10       	      50	  23438210 ns/op
+BenchmarkStructAccessNonSequential-10    	      50	  22916008 ns/op
 PASS
-ok  	bench	6.572s
+ok  	bench	7.766s
 
 
 BANDWIDTH BENCHMARK RESULTS
 
 Chunk size:    0.3MB
-Arraysize:    0.26MB, numThreads:  1, bandwidth:  25.70GB/s, runs: 100
-Arraysize:    0.52MB, numThreads:  2, bandwidth:  49.83GB/s, runs: 100
-Arraysize:    1.05MB, numThreads:  4, bandwidth:  96.30GB/s, runs: 100
-Arraysize:    2.10MB, numThreads:  8, bandwidth: 189.53GB/s, runs: 100
-Arraysize:    2.62MB, numThreads: 10, bandwidth: 146.48GB/s, runs: 64
-Arraysize:    4.19MB, numThreads: 16, bandwidth: 190.18GB/s, runs: 46
-Arraysize:    8.39MB, numThreads: 32, bandwidth: 193.04GB/s, runs: 27
-Arraysize:   16.78MB, numThreads: 64, bandwidth: 199.76GB/s, runs: 13
+Arraysize:    0.26MB, numThreads:  1, bandwidth:  25.71GB/s, runs: 100
+Arraysize:    0.52MB, numThreads:  2, bandwidth:  49.74GB/s, runs: 100
+Arraysize:    1.05MB, numThreads:  4, bandwidth:  96.23GB/s, runs: 100
+Arraysize:    2.10MB, numThreads:  8, bandwidth: 179.45GB/s, runs: 94
+Arraysize:    2.62MB, numThreads: 10, bandwidth: 143.09GB/s, runs: 64
+Arraysize:    4.19MB, numThreads: 16, bandwidth: 165.03GB/s, runs: 48
+Arraysize:    8.39MB, numThreads: 32, bandwidth: 187.08GB/s, runs: 27
+Arraysize:   16.78MB, numThreads: 64, bandwidth: 197.64GB/s, runs: 13
 
 Chunk size:   16.8MB
-Arraysize:   16.78MB, numThreads:  1, bandwidth:  25.16GB/s, runs: 2
-Arraysize:   33.55MB, numThreads:  2, bandwidth:  49.68GB/s, runs: 2
-Arraysize:   67.11MB, numThreads:  4, bandwidth:  98.54GB/s, runs: 2
-Arraysize:  134.22MB, numThreads:  8, bandwidth: 118.71GB/s, runs: 1
-Arraysize:  167.77MB, numThreads: 10, bandwidth: 124.36GB/s, runs: 1
-Arraysize:  268.44MB, numThreads: 16, bandwidth: 121.46GB/s, runs: 1
-Arraysize:  536.87MB, numThreads: 32, bandwidth: 122.39GB/s, runs: 1
-Arraysize: 1073.74MB, numThreads: 64, bandwidth: 122.51GB/s, runs: 1
+Arraysize:   16.78MB, numThreads:  1, bandwidth:  24.93GB/s, runs: 2
+Arraysize:   33.55MB, numThreads:  2, bandwidth:  49.37GB/s, runs: 2
+Arraysize:   67.11MB, numThreads:  4, bandwidth:  98.57GB/s, runs: 2
+Arraysize:  134.22MB, numThreads:  8, bandwidth: 118.26GB/s, runs: 1
+Arraysize:  167.77MB, numThreads: 10, bandwidth: 122.64GB/s, runs: 1
+Arraysize:  268.44MB, numThreads: 16, bandwidth: 123.64GB/s, runs: 1
+Arraysize:  536.87MB, numThreads: 32, bandwidth: 120.62GB/s, runs: 1
+Arraysize: 1073.74MB, numThreads: 64, bandwidth: 122.92GB/s, runs: 1
 
 
 
@@ -45,17 +45,100 @@ C BENCHMARK RESULTS
 ------------------------------------------------------------
 Benchmark                  Time             CPU   Iterations
 ------------------------------------------------------------
-BM_ExpfApprox/-20       1.29 ns         1.29 ns    483325278
-BM_ExpfApprox/-8        1.29 ns         1.29 ns    543761118
-BM_ExpfApprox/-1        1.28 ns         1.28 ns    542425417
-BM_ExpfApprox/0         1.28 ns         1.28 ns    545987770
-BM_ExpfApprox/1         1.28 ns         1.28 ns    545719609
-BM_ExpfApprox/8         1.29 ns         1.29 ns    546153906
-BM_ExpfApprox/20        1.29 ns         1.29 ns    545898354
-BM_Expf/-20             2.56 ns         2.56 ns    273145149
-BM_Expf/-8              2.56 ns         2.56 ns    273318991
-BM_Expf/-1              2.56 ns         2.56 ns    273185657
-BM_Expf/0               2.44 ns         2.44 ns    286059893
-BM_Expf/1               2.44 ns         2.44 ns    286024827
-BM_Expf/8               2.44 ns         2.44 ns    286400478
-BM_Expf/20              2.45 ns         2.45 ns    286182691
+BM_ExpfApprox/-20       1.31 ns         1.31 ns    486597709
+BM_ExpfApprox/-8        1.31 ns         1.31 ns    526118001
+BM_ExpfApprox/-1        1.31 ns         1.31 ns    536316273
+BM_ExpfApprox/0         1.32 ns         1.32 ns    530612554
+BM_ExpfApprox/1         1.32 ns         1.32 ns    526652372
+BM_ExpfApprox/8         1.32 ns         1.32 ns    530789587
+BM_ExpfApprox/20        1.36 ns         1.34 ns    536945699
+BM_Expf/-20             2.66 ns         2.66 ns    266296388
+BM_Expf/-8              2.61 ns         2.61 ns    266893399
+BM_Expf/-1              2.61 ns         2.61 ns    268353460
+BM_Expf/0               2.50 ns         2.50 ns    281182090
+BM_Expf/1               2.49 ns         2.49 ns    280313952
+BM_Expf/8               2.60 ns         2.51 ns    278890018
+BM_Expf/20              2.49 ns         2.49 ns    280416138
+
+
+MPI BENCHMARK RESULTS
+
+mpirun (Open MPI) 4.1.5
+
+Report bugs to http://www.open-mpi.org/community/help/
+
+Running with 2 cores
+Running AllReduce benchmark on 2 processes
+Data Size (Bytes), Data Size (human readable), Average AllReduce Latency (μs)
+1024, 1.0KB, 1.25
+2048, 2.0KB, 1.59
+4096, 4.1KB, 2.81
+8192, 8.2KB, 4.13
+16384, 16.4KB, 7.37
+32768, 32.8KB, 8.2
+65536, 65.5KB, 15.51
+131072, 131.1KB, 23.82
+262144, 262.1KB, 39.91
+524288, 524.3KB, 77.06
+1048576, 1.0MB, 172.35
+2097152, 2.1MB, 392.95
+4194304, 4.2MB, 788.48
+8388608, 8.4MB, 1583.24
+16777216, 16.8MB, 2981.26
+33554432, 33.6MB, 6293.46
+67108864, 67.1MB, 12541.3
+134217728, 134.2MB, 25988.7
+268435456, 268.4MB, 50666.3
+536870912, 536.9MB, 104991
+1073741824, 1.1GB, 234791
+
+Running with 4 cores
+Running AllReduce benchmark on 4 processes
+Data Size (Bytes), Data Size (human readable), Average AllReduce Latency (μs)
+1024, 1.0KB, 2.52
+2048, 2.0KB, 3.08
+4096, 4.1KB, 6.8
+8192, 8.2KB, 9.94
+16384, 16.4KB, 14.48
+32768, 32.8KB, 17.34
+65536, 65.5KB, 28.58
+131072, 131.1KB, 44.86
+262144, 262.1KB, 73.48
+524288, 524.3KB, 134.57
+1048576, 1.0MB, 248.35
+2097152, 2.1MB, 559.57
+4194304, 4.2MB, 1132.34
+8388608, 8.4MB, 2483.44
+16777216, 16.8MB, 4797.26
+33554432, 33.6MB, 10290.9
+67108864, 67.1MB, 21084.9
+134217728, 134.2MB, 42480.3
+268435456, 268.4MB, 83528.4
+536870912, 536.9MB, 170635
+1073741824, 1.1GB, 375212
+
+Running with 8 cores
+Running AllReduce benchmark on 8 processes
+Data Size (Bytes), Data Size (human readable), Average AllReduce Latency (μs)
+1024, 1.0KB, 4
+2048, 2.0KB, 4.97
+4096, 4.1KB, 11.83
+8192, 8.2KB, 12.6
+16384, 16.4KB, 20.26
+32768, 32.8KB, 26.36
+65536, 65.5KB, 39.45
+131072, 131.1KB, 62.72
+262144, 262.1KB, 110.66
+524288, 524.3KB, 206.86
+1048576, 1.0MB, 402.44
+2097152, 2.1MB, 903.97
+4194304, 4.2MB, 1962.16
+8388608, 8.4MB, 4395.62
+16777216, 16.8MB, 8430.89
+33554432, 33.6MB, 18479.8
+67108864, 67.1MB, 37357.7
+134217728, 134.2MB, 73129
+268435456, 268.4MB, 149241
+536870912, 536.9MB, 308948
+1073741824, 1.1GB, 624808
+
