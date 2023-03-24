@@ -38,19 +38,18 @@ int main(int argc, char *argv[]) {
 
   size_t MAX_SIZE = 1024 * 1024 * 1024;
 
-  std::vector<float> send_buffer(MAX_SIZE / sizeof(float), 1.0);
-  std::vector<float> recv_buffer(MAX_SIZE / sizeof(float), 0.0);
+  std::vector<float> recv_buffer(MAX_SIZE / sizeof(float), 1.0);
 
   // Warm-up
   for (int i = 0; i < 5; ++i) {
-    MPI_Allreduce(send_buffer.data(), recv_buffer.data(),
+    MPI_Allreduce(MPI_IN_PLACE, recv_buffer.data(),
                   MAX_SIZE / sizeof(float), MPI_FLOAT, MPI_SUM, MPI_COMM_WORLD);
   }
 
   for (size_t data_size = 1024; data_size <= MAX_SIZE; data_size *= 2) {
     // Warm-up
     for (int i = 0; i < 10; ++i) {
-      MPI_Allreduce(send_buffer.data(), recv_buffer.data(),
+      MPI_Allreduce(MPI_IN_PLACE, recv_buffer.data(),
                     data_size / sizeof(float), MPI_FLOAT, MPI_SUM,
                     MPI_COMM_WORLD);
     }
@@ -60,7 +59,7 @@ int main(int argc, char *argv[]) {
     start_time = MPI_Wtime();
 
     for (int i = 0; i < num_iterations; ++i) {
-      MPI_Allreduce(send_buffer.data(), recv_buffer.data(),
+      MPI_Allreduce(MPI_IN_PLACE, recv_buffer.data(),
                     data_size / sizeof(float), MPI_FLOAT, MPI_SUM,
                     MPI_COMM_WORLD);
     }
