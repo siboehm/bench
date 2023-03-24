@@ -6,7 +6,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.14.4
+#       jupytext_version: 1.14.5
 #   kernelspec:
 #     display_name: bench
 #     language: python
@@ -75,7 +75,7 @@ fig.update_layout(
     title="ReLU performance on GPU",
     xaxis_title="Number of fp32 entries",
     yaxis_title="Avg Time (ms)",
-    yaxis2=dict(title="Bandwidth GB/s", showgrid=True, overlaying="y", side="right"),
+    yaxis2=dict(title="Bandwidth GB/s", showgrid=False, overlaying="y", side="right"),
     legend=dict(x=0.05, y=0.95),
 )
 
