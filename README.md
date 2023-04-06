@@ -1,6 +1,7 @@
 See `results.txt`.
 
 ## How to use
+Use `export GOAMD64=v3` to get the Go compiler to [emit AVX2](https://github.com/golang/go/wiki/MinimumRequirements#amd64).
 
 To look at pprof profiles and Go disasm:
 ```bash
