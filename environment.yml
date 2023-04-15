@@ -12,8 +12,9 @@ dependencies:
   - pandas
   - jupytext
   - tensorboard
+  - pytorch
   - compilers
   - clang-format
   - pip
   - pip:
-    - torch_tb_profiler
+      - torch_tb_profiler
