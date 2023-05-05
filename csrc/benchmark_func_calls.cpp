@@ -1,6 +1,6 @@
 #include <benchmark/benchmark.h>
 
-float __attribute__((noinline)) someFunctionNoInline(float a) { return a; }
+float __attribute__((noinline)) someFunctionNoInline(float a) { return -a; }
 
 /*
 Considerations:
@@ -14,7 +14,7 @@ float result;
 
 static void BM_someFunction(benchmark::State &state) {
   for (auto _ : state) {
-    result += a;
+    result += -a;
   }
 }
 
