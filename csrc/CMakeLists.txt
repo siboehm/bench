@@ -7,9 +7,9 @@ endif()
 
 if (APPLE)
   # if on mac, use mcpu instead of march
-  set(CMAKE_CXX_FLAGS_RELEASE "-O3 -mcpu=native -mtune=native -funsafe-math-optimizations")
+  set(CMAKE_CXX_FLAGS_RELEASE "-O3 -mcpu=native -mtune=native")
 else()
-    set(CMAKE_CXX_FLAGS_RELEASE "-O3 -march=native -mtune=native -funsafe-math-optimizations")
+    set(CMAKE_CXX_FLAGS_RELEASE "-O3 -march=native -mtune=native")
 endif()
 
 set(CMAKE_CXX_STANDARD 17)
