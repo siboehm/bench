@@ -1,31 +1,30 @@
 #include <benchmark/benchmark.h>
 
-// The function to be benchmarked
-float __attribute__((noinline)) someFunctionNoInline(float a) { return 1 / a; }
+float __attribute__((noinline)) someFunctionNoInline(float a) { return a; }
+
+/*
+Considerations:
+- Cannot use int accumulator, bc the compiler will vectorize (associativity is
+given)
+- Accumulate happens in reg, writes to memory at the end
+*/
 
 float a = 10;
-float b = 20;
 float result;
 
-// Benchmark definition
 static void BM_someFunction(benchmark::State &state) {
   for (auto _ : state) {
-    float x = static_cast<float>(state.range(0));
-    result += -x;
+    result += a;
   }
 }
 
-// Benchmark definition
 static void BM_someFunctionNoInline(benchmark::State &state) {
   for (auto _ : state) {
-    float x = static_cast<float>(state.range(0));
-    result += someFunctionNoInline(x);
+    result += someFunctionNoInline(a);
   }
 }
 
-// Register the benchmark
-BENCHMARK(BM_someFunction)->Range(8, 8 << 10);
-BENCHMARK(BM_someFunctionNoInline)->Range(8, 8 << 10);
+BENCHMARK(BM_someFunction);
+BENCHMARK(BM_someFunctionNoInline);
 
-// Main function
 BENCHMARK_MAIN();
