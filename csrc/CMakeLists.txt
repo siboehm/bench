@@ -20,8 +20,6 @@ find_package(benchmark REQUIRED)
 
 add_executable(bench_exp benchmark_exp.cpp)
 target_link_libraries(bench_exp benchmark::benchmark)
-add_executable(bench_fma benchmark_fma.cpp)
-target_link_libraries(bench_fma benchmark::benchmark)
 add_executable(benchmark_func_calls benchmark_func_calls.cpp)
 target_link_libraries(benchmark_func_calls benchmark::benchmark)
 
