@@ -14,3 +14,5 @@ fma: benchmark_fma.cpp
 
 fma.asm: fma
 	objdump -S $^ | c++filt > $@
+	objdump -S --disassemble=_Z6no_fmaf fma | c++filt > asm/no_fma.asm
+	objdump -S --disassemble=_Z8with_fmaf fma | c++filt > asm/with_fma.asm
