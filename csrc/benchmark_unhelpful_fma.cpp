@@ -1,16 +1,19 @@
-#include <cmath>
-#include <random>
-
 #include "benchmark/benchmark.h"
 
-float_t abcd(float a, float b, float c, float d) { return (a * b) + (c * d); }
+float __attribute__((noinline)) doAbcd(float a, float b, float c, float d) {
+  return (a * b) + (c * d);
+}
+
+float a = 1.0f;
+float b = 1.0f;
+float c = 1.0f;
+float d = 1.0f;
 
 static void BM_ABCD(benchmark::State &state) {
   for (auto _ : state) {
-    float_t x = static_cast<float_t>(state.range(0));
-    benchmark::DoNotOptimize(abcd(x, x, x, x));
+    benchmark::DoNotOptimize(doAbcd(a, b, c, d));
   }
 }
 
-BENCHMARK(BM_ABCD)->Range(1, 1);
+BENCHMARK(BM_ABCD);
 BENCHMARK_MAIN();
